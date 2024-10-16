@@ -29,6 +29,23 @@ create table courses(
 alter table users
 add name varchar(50) not null;
 
+alter table courses
+add upload_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP;
+
+create table videos(
+	id int auto_increment primary key,
+    title varchar(200) not null,
+    description text,
+    thumbnail varchar(150) not null,
+    url varchar(200) not null unique,
+    course_id int not null,
+    upload_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+
+    foreign key(course_id) references courses(id)
+    on update cascade
+    on delete cascade
+);
+
 
 
 select * from courses;
