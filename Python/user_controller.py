@@ -2,11 +2,29 @@
 
 
 from flask import make_response
+import jwt
+from datetime import datetime,timedelta
 from queries import add_query,update_query,delete_query,login_query
 
 
 def login(data,cursor):
-    query=login_query(curosr=cursor,data=data)
+    query=login_query(data=data)
+    try:
+        cursor.execute(query)
+        info=cursor.fetchone()
+        exp_time=datetime.now()+timedelta(minutes=15)
+        epoch_time=int(exp_time.timestamp())
+        payload={
+            "payload":info,
+            "exp":epoch_time
+        }
+        tok=jwt.encode(payload=payload,key="bhung",algorithm="HS384")
+        token={
+            "token":tok
+        }
+        return make_response(token,200)
+    except Exception as e:
+        return make_response({"message":f"{e}"},400)
 
 def get_students(cursor):
     query="select id, image, name, role_id from Users where role_id=1"

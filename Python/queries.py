@@ -1,5 +1,6 @@
-def login_query(cursor,data):
-    pass
+def login_query(data):
+    query=f"select id, name, username, email from users where username='{data['username']}' and password='{data['password']}'"
+    return query
 
 
 def add_query(data,table):
