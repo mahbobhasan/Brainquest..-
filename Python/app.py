@@ -32,9 +32,10 @@ def final_dict(request):
 
 # Convention Ends
 
-@app.route("/home")
-def home():
-    return "Hello world"
+@app.route("/login")
+def login():
+    data=request.form
+    
 
 @app.route("/students")
 def student():

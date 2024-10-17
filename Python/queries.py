@@ -1,3 +1,6 @@
+def login_query(cursor,data):
+    pass
+
 
 def add_query(data,table):
     query=f"insert into {table} ("

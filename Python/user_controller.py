@@ -2,7 +2,11 @@
 
 
 from flask import make_response
-from queries import add_query,update_query,delete_query
+from queries import add_query,update_query,delete_query,login_query
+
+
+def login(data,cursor):
+    query=login_query(curosr=cursor,data=data)
 
 def get_students(cursor):
     query="select id, image, name, role_id from Users where role_id=1"
