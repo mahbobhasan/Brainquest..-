@@ -4,7 +4,7 @@ let body= document.body;
 const header=document.getElementById("header")
 header.innerHTML=`
             <section class="flex" >
-                <a href="Home.html" class="logo">BrainQuest..!</a>
+                <a href="index.html" class="logo">BrainQuest..!</a>
 
                 <form action=" " method="post" class="search-form" >         <!-- user input-->
 
