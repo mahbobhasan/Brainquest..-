@@ -1,0 +1,1418 @@
+@import url('https://fonts.googleapis.com/css2?family=Nunito:ital,wght@0,200..1000;1,200..1000&display=swap');
+:root{
+    --main-color:#00cec9;
+    --red:#e94a4a;
+    --orange:#d35400;
+    --white:#ffffff;
+    --black: rgb(34, 33, 33);
+    --littleblack:rgb(59, 58, 58);
+    --littlewhite:white;
+    --light-color:#494141;
+    --light-bg:#f8f8f8;
+    --border: .1rem solid rgba(0,0,0,.2);
+
+
+}
+*{
+    font-family: 'Nunito' , sans-serif;
+    margin: 0 ; padding: 0;
+    box-sizing: border-box;
+    outline: none; border: none;
+    text-decoration: none;
+}
+
+*::selection{
+    background-color: var(--main-color);
+    color: #fff;
+}
+
+*::-webkit-scrollbar{
+    height: 0.5rem;
+    width: 1rem;
+
+}
+
+*::-webkit-scrollbar-track{
+    background-color: transparent;
+}
+
+*::-webkit-scrollbar-thumb{
+    background-color: var(--main-color);
+}
+
+html{
+    font-size: 63.5%;
+    overflow-x: hidden;
+}
+/* navbar size change hoise eikhane */
+body{
+    background-color: var(--light-bg);
+    padding-left: 30rem ;
+}
+
+body.dark{
+    --white:rgb(19, 18, 18);
+    --black:white;
+    --light-color:#dfdfdf;
+    --littleblack:white;
+    --littlewhite:rgb(59, 58, 58);
+    --light-bg:#222630;
+    --border: 1rem solid rgba(255,255,255,.2);
+}
+
+body.active{
+    padding-left: 0rem;
+}
+
+
+/*  */
+section{
+    padding: 2rem;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+
+
+.btn,
+.option-btn,
+.delete-btn,
+.inline-btn,
+.inline-option-btn,
+.inline-delete-btn{
+    border-radius: .5rem;
+    padding: 1rem 3rem;
+    font-size: 1.8rem;
+    margin-top: 1rem ;
+    color:blue;
+    font-weight: bolder;
+    cursor: pointer;
+    text-align: center;
+    text-transform: capitalize;
+
+}
+
+.btn,
+.option-btn,
+.delete-btn{
+    display: block;
+    width:100%;
+}
+
+.inline-btn,
+.inline-option-btn,
+.inline-delete-btn{
+    display: inline-block;
+}
+
+.btn,
+.inline-btn{
+    background-color: var(--main-color);
+}
+
+.option-btn,
+.inline-option-btn{
+    background-color: yellow;
+}
+
+.delete-btn,
+.inline-delete-btn{
+    background-color: yellow;
+}
+
+.btn:hover,
+.option-btn:hover,
+.delete-btn:hover,
+.inline-btn:hover,
+.inline-option-btn:hover,
+.inline-delete-btn:hover{
+   background-color: rgb(187, 48, 187);
+   color: white;
+}
+
+.flex-btn{
+    display: flex;
+    gap: 1rem;
+}
+
+
+
+
+
+
+.header{
+    background-color:#d63031;
+    border-bottom: var(--border) ;
+    position:sticky;
+    top:0 ; left:0 ; right:0;
+    z-index: 1000;
+}
+.header .flex{
+    padding: 1.5rem 2rem;
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content:space-between;
+}
+.header .flex .logo{
+    font-size: 3rem;
+    font-weight: bolder;
+    color: rgb(255, 255, 255);
+}
+
+.header .flex .search-form{
+    width: 50rem;
+    border-radius: .5rem;
+    display: flex;
+    align-items: center;
+    gap: 1.5rem ;
+    padding: 1rem 2rem;
+    background-color: #ffffff;
+}
+
+.header .flex .search-form input{
+    width: 100%;
+    background:none;
+    font-size: 1.8rem;
+    color: rgb(39, 38, 38);
+}
+
+.header .flex .search-form button{
+    font-size: 2.5rem;
+    color:rgb(3, 158, 179);
+    cursor:pointer;
+    background: none;
+}
+
+.header .flex .search-form button:hover{
+   color: rgb(0, 0, 0);
+}
+
+.header .flex .icons div{
+    font-size: 2rem;
+    color: var(--black);
+    border-radius: .5rem;
+    height: 4.4rem;
+    cursor: pointer;
+    width: 4.4rem;
+    line-height: 4.5rem;
+    background-color: var(--light-bg); 
+    text-align: center;
+    margin-left: .5rem;
+   
+
+}
+.header .flex .icons div:hover {
+    background-color: #55efc4;
+    color: rgb(252, 252, 252);
+}
+
+#search-btn{
+    display: none;
+}
+
+
+
+/* profile e click korar por */
+.header .flex .profile{
+    position: absolute;
+    top:120% ; right:2rem;
+    background-color: var(--white);
+    border-radius: .5rem;
+    padding: 2rem;
+    text-align: center;
+    width : 35rem;
+    transform :scale(0);
+    transform-origin: top-right;
+    transition: .2s linear;
+}
+
+.header .flex .profile.active{
+    transform: scale(1);
+}
+
+
+
+/* profile e click korar por */
+.header .flex .profile img{
+    height: 10rem;
+    width: 10rem;
+    border-radius: 50%;
+    object-fit: cover;
+    margin-bottom: .5rem;
+    
+}
+
+.header .flex .profile h3{
+    font-size: 2rem;
+    color: var(--black);
+
+}
+
+.header .flex .profile span{
+    color: var(--black);
+    font-weight: bolder;
+    font-size: 1.5rem;
+}
+
+
+
+/* sidebar */
+.sidebar{
+    position: fixed;
+    top:0 ;
+    left:0;
+    height: 100%;
+    width:30rem;
+    background-color: var(--white);
+    border-right: var(--border) ;
+    overflow-y: scroll;
+    z-index: 1200;
+    /* transition: 0.2s linear; */
+
+}
+
+.sidebar .close-sidebar{
+    text-align:right;
+    padding-top: 2rem;
+    padding-right:1rem;
+    padding-bottom: 0rem;
+    /* display:none; */
+}
+.sidebar .close-sidebar i{
+   height: 4.5rem;
+   width: 4.5rem;
+   line-height: 4.4rem;
+   font-size: 2rem;
+   color: white;
+   background-color:#2ed573;
+   text-align: center;
+   cursor:pointer;
+   border-radius:0.6rem;
+}
+
+.sidebar .close-sidebar i:hover{
+    background-color: #EA2027;
+}
+
+
+
+
+.sidebar .profile{
+    padding:3rem 2rem;
+    text-align:center;
+}
+.sidebar .profile img{
+   height:10rem;
+   width: 10rem;
+   border-radius:50%;
+   object-fit:cover;
+   margin-bottom:.5rem;
+}
+.sidebar .profile h3{
+    font-size:2rem;
+    color:var(--black);
+}
+.sidebar .profile span{
+    font-size:1.5rem;
+    font-weight:bolder;
+    color:var(--black);
+}
+ .sidebar .navbar{
+    margin-top:1rem;
+}
+
+.sidebar .navbar a{
+    display:block;
+    padding:1.5rem;
+    margin:1rem 1rem;
+    font-size:2rem;
+    font-weight:bolder;
+
+}
+
+.sidebar .navbar a i{
+    color: var(--main-color);
+    margin-right:2rem;
+    transition: .3s linear;
+
+}
+
+.sidebar .navbar a span{
+    color: #2f3542;
+}
+
+.sidebar .navbar a:hover{
+   /* background: linear-gradient(to right, rgb(238, 118, 134), rgb(7, 228, 228))  ;  */
+   background-color: #dfe6e9;
+    
+}
+ 
+.sidebar .navbar a:hover i{
+    margin-right: 3.5rem;
+   
+}
+
+.dropdown-container{
+    transition: 2s linear;
+}
+
+.dropdown-content{
+    display: none;
+}
+
+.dropdown-container:hover .dropdown-content{
+    transition: 2s linear;
+    display:contents;
+
+}
+
+/* sidebar active */
+.sidebar.active{
+    left: -31rem;
+}
+
+
+/* ------------about page work---------- */
+
+.about .row{
+    display:flex;
+    align-items: center;
+    margin-top: 1rem;
+    gap: 1.8rem;
+    flex-wrap: wrap;
+}
+.about .row .image{
+    flex:1 1 40rem;
+    position: relative;
+   
+}
+.about .row .image img{
+    width: 100%;
+    height: 80%; 
+    left: -5rem;
+    
+}
+.about .row .content{
+    flex: 1 1 40rem;
+    margin-top: 2rem;
+    text-align: justify;
+
+}
+.about .row .content h3{
+    font-size: 2.5rem;
+    color: var(--black);
+
+}
+.about .row .content p{
+    line-height: 1.5;
+    font-size: 2rem;
+    color:var(--light-color);
+    padding: 1rem 0;
+    
+}
+
+
+/*About us  calculation gula */
+.about .box-container{
+    margin-top: .5rem;
+    display: flex;
+    gap: 1.5rem;
+    flex-wrap: wrap;
+   
+    
+}
+.about .box-container .box{
+    flex: 1 1 20rem;
+    display:flex;
+    background-color: white;
+    border-radius: 0.5rem;
+    padding: 2rem;
+    align-items: center;
+    gap:0rem;
+  
+}
+.about .box-container .box:hover{
+    box-shadow: 0 0 15px rgba(255, 2, 78, 0.75); 
+}
+
+.about .box-container .box i{
+    font-size: 3rem;
+    color: rgb(54, 52, 52);
+    margin-left: 2.5rem;
+}
+.about .box-container .box h3{
+    font-size: 2rem;
+    color: #ee5253;
+    text-align: center;
+}
+.about .box-container .box span{
+    font-size: 1.5rem;
+    font-weight: bolder;
+    color: rgb(54, 52, 52);
+    margin-left: 2rem;
+
+}
+
+/* ----------about page end---------- */
+
+
+
+
+
+
+
+/* for login ,register and Update profile page */
+.form-container{
+    display:flex ;
+    align-items: center;
+    justify-content: center;
+    min-height: calc(100vh -20rem);
+    margin-top: 5rem;
+}
+.form-container form{
+    background-color: #43afb9;
+    border-radius: 0.5rem;
+    padding :2rem;
+    width: 95rem;
+}
+ 
+.form-container form p{
+   padding-top: 1rem;
+   font-size: 1.7rem;
+   font-weight: bolder;
+   color: var(--black);
+} 
+
+.form-container form h3{
+    text-align:center;
+    font-size: 2.5rem;
+    margin-bottom: 1rem;
+    color:var(--black);
+ } 
+
+.form-container form p span{
+    color:var(--red);
+}
+
+.form-container form .box{ 
+    width:100%;
+    border-radius: 0.5rem;
+    margin: 1rem 0;
+    font-size: 1.8rem;
+    color:black;
+    padding:1.4rem;
+    background-color: white;      
+    /* change korte hobe */
+}
+.form-container form .inline-btn{
+   margin-left: 39rem;
+   
+}
+.form-container form .Account p{
+    font-size: 1.8rem;
+    text-align: center;
+    margin-top: 1rem;
+    margin-bottom: 1.4rem;
+   
+}
+
+
+/* ..............Profile page start eikhane................ */
+.profile .details{
+   background-color: var(--white);
+   border-radius: .5rem;
+   padding:2rem;
+   margin-top: 1rem;
+}
+.profile h1{
+    font-size: 2.5rem;
+    color: var(--red);
+    margin-top:4rem;
+    
+}
+.profile .details .user{
+    text-align: center;
+    margin-bottom: 5rem;
+    margin-top:3rem;
+}
+.profile .details img{
+    height: 10rem;
+    width: 10rem;
+    border-radius: 50%;
+    object-fit: cover;
+}
+.profile .details .user h3{
+    font-size: 2rem;
+    margin: .5rem 0;
+    color:var(--black);
+}
+.profile .details .user p{
+    font-size :1.7rem;
+    color: var(--black);
+} 
+.profile .details .box-container{
+   display: flex;
+   flex-wrap :wrap;
+   align-items: flex-end;
+   gap: 1.5rem;
+}
+.profile .details .box-container .box{
+    background-color: #d7dde0;
+    border-radius: .5rem;
+    padding: 2rem;
+    flex: 1 1 30rem;
+ }
+ .profile .details .box-container .box .flex{
+    display: flex;
+    align-items: center ;
+    gap:1.7rem;
+    margin-bottom: 1rem;
+ }
+ .profile .details .box-container .box .flex i{
+    height: 5rem;
+    width:5rem;
+    border-radius: .5rem;
+    line-height: 5rem;
+    font-size: 2rem;
+    background-color:var(--white);
+    color:#e74c3c;
+    text-align:center;
+ }
+ .profile .details .box-container .box .flex h3{
+   color: purple;
+   font-size: 2rem;
+   margin-bottom: .2rem;
+ }
+ .profile .details .box-container .box .flex span{
+   font-size: 1.9rem;
+   font-weight: bolder;
+   color:  purple;   
+  }
+
+/* profile page end  */
+
+
+/* ..........teachers page start......... */
+.teachers .search-tutor{
+    margin-bottom: 3rem;
+    display:flex;
+    align-items: center;
+    gap: 1.5rem;
+    padding: 1.5rem  2rem;
+    background-color: white;
+    border-radius: 0.5rem;
+}
+.teachers h1{
+      color: var(--black);
+      font-size: 2.5rem;
+}
+.teachers hr{
+    margin-bottom: 2rem;
+    margin-top: 1rem;
+}
+.teachers .search-tutor input{
+   
+   width: 100%;
+   font-size: 1.8rem;
+   color: black;
+   background: none;
+}
+.teachers .search-tutor button{
+    cursor: pointer;
+    font-size: 2.5rem;
+    color: var(--main-color);
+    background: none;
+ }
+ .teachers .search-tutor button:hover{
+    color:red;
+ }
+ .teachers .box-container{
+    display:grid;
+    gap:1.5rem;
+    align-items: flex-start;
+    justify-content: center;
+    grid-template-columns: repeat(auto-fit, minmax(30rem ,1fr));
+}
+.teachers .box-container .box{
+    border-radius:.5rem;
+    background-color: var(--white);
+    padding:3rem;
+
+}
+.teachers .box-container .box:hover{
+    /* box-shadow: 0 0 15px var(--black); */
+    box-shadow: 0 0 15px rgba(0, 123, 255, 0.75); 
+}
+
+.teachers .box-container .box .tutor{
+    margin-bottom: 2.5rem;
+    display: flex;
+    align-items: center;
+    gap: 2rem;
+
+}
+.teachers .box-container .box .tutor img{
+   width:7rem;
+   height:7rem;
+   border-radius: 50%;
+   object-fit: cover;
+}
+.teachers .box-container .box .tutor h3{
+   font-size: 2rem;
+   color:var(--black);
+   margin-bottom: .2rem;
+ }
+ .teachers .box-container .box .tutor span{
+    font-size: 1.7rem;
+    color:var(--light-color);
+    
+  }
+.teachers .box-container .box img{
+   width:100%;
+   height:100%;
+   border-radius: 0.5rem;
+   height:20rem;
+   object-fit: fill;
+}
+.teachers .box-container .box .title{
+   font-size: 2rem;
+   color: var(--black);
+   margin-top: 0.5rem;
+   padding:.5rem 0;
+ }
+.teachers .mbtn{
+    margin-top:2rem;
+    text-align: center;
+}
+
+/* ...........teachers page end.......... */
+
+
+
+
+/* ............Tutor Profile start....... */
+.tutor-profile .details{
+    background-color: var(--white);
+    border-radius:0.5rem;
+    padding :2rem;
+    text-align: center;
+}
+.tutor-profile h1{
+    color: var(--red);
+    font-size: 2.5rem;
+}
+.tutor-profile .details .tutor{
+   margin-bottom :2rem;
+}
+.tutor-profile hr{
+    margin-bottom: 2rem;
+    margin-top: 1rem;
+}
+.tutor-profile .details .tutor img{
+   height: 20rem;
+   width:20rem;
+   border-radius: 50%;
+   object-fit: cover;
+   margin-bottom: 0.5rem;
+ }
+ .tutor-profile .details .tutor h3{
+    font-size: 2rem;
+    color:var(--black);
+    margin: 0.5rem 0;
+
+}
+.tutor-profile .details .tutor span{
+    font-size: 1.5rem;
+    color:var(--black);
+}
+.tutor-profile .details .flex{
+    display: flex;
+    gap: 1.5rem;
+    align-items: center;
+    flex-wrap: wrap;
+}
+.tutor-profile .details .flex p{
+   flex: 1 1 25rem;
+   border-radius: .5rem;
+   background-color: var(--light-bg);
+   padding : 1rem 3rem;
+   font-size: 2rem;
+   color: var(--light-color);
+}
+.tutor-profile .details .flex span{
+    color: var(--red);
+ }
+
+
+
+/* ............Tutor Profile End */
+
+
+
+
+/*..............Courses Section start.........*/
+.courses h1{
+    font-size: 2.7rem;
+    color:var(--black);
+}
+.courses hr{
+    margin-bottom: 1.5rem;
+    margin-top: 0.5rem;
+}
+.courses .box-container{
+    display:grid;
+    gap:1.5rem;
+    align-items: flex-start;
+    justify-content: center;
+    grid-template-columns: repeat(auto-fit, minmax(30rem ,1fr));
+}
+.courses .box-container .box{
+    border-radius:.5rem;
+    background-color: var(--white);
+    padding:3rem;
+
+}
+.courses .box-container .box:hover{
+    /* box-shadow: 0 0 15px var(--black); */
+    box-shadow: 0 0 15px rgba(0, 123, 255, 0.75); 
+}
+
+.courses .box-container .box .tutor{
+    margin-bottom: 2.5rem;
+    display: flex;
+    align-items: center;
+    gap: 2rem;
+
+}
+.courses .box-container .box .tutor img{
+   width:7rem;
+   height:7rem;
+   border-radius: 50%;
+   object-fit: cover;
+}
+.courses .box-container .box .tutor h3{
+   font-size: 2rem;
+   color:var(--black);
+   margin-bottom: .2rem;
+ }
+ .courses .box-container .box .tutor span{
+    font-size: 1.7rem;
+    color:var(--light-color);
+    
+  }
+.courses .box-container .box img{
+   width:100%;
+   height:100%;
+   border-radius: 0.5rem;
+   height:20rem;
+   object-fit: fill;
+}
+.courses .box-container .box .title{
+   font-size: 2rem;
+   color: var(--black);
+   margin-top: 0.5rem;
+   padding:.5rem 0;
+ }
+.courses .mbtn{
+    margin-top:2rem;
+    text-align: center;
+  
+
+}
+
+
+
+
+/* .............Courses Section end........... */
+
+
+/* ...............Contact Page start........... */
+.contact .row{
+    display:flex;
+    align-items: center;
+    gap:1.5rem;
+    margin-top: 3rem;
+    flex-wrap: wrap;
+    
+}
+.contact .row .image{
+    flex:1 1 50rem;
+}
+.contact .row .image img{
+    width:100%;
+    height:50rem;
+}
+.contact .row form{
+    flex:1 1 30rem;
+    background-color: var(--white);
+    border-radius: .5rem;
+    padding:2rem;
+    text-align:center;
+
+}
+.contact .row form h3{
+   font-size: 2.5rem;
+   margin-bottom: 1rem;
+   color:var(--black);
+}
+.contact .row form .box{
+    width:100%;
+    margin:1rem 0;
+    border-radius: .5rem;
+    background-color: var(--light-bg);
+    padding:1.5rem;
+    color:var(--black);
+    font-size: 2rem;
+    
+}
+.contact .row form textarea{
+    height:20rem;
+    resize:none;
+}
+
+
+.contact .box-container{
+    margin-top: 3rem;
+    display:flex;
+    gap:1.5rem;
+    flex-wrap: wrap;
+    /* ...... */
+    /* overflow-x:auto;
+    min-width: 20rem; */
+
+}
+
+
+.contact .box-container .box{
+    flex: 1 1 20rem;  
+    border-radius: .5rem;
+    background-color: var(--white);
+    padding:2rem;
+    text-align: center;
+}
+.contact .box-container .box:hover{
+    box-shadow: 0 0 15px rgba(0, 123, 255, 0.75); 
+}
+.contact .box-container .box i{
+    font-size: 3rem;
+    color:var(--red);
+    margin-bottom: 1rem;
+}
+.contact .box-container .box h3{
+    margin: 1.5rem 0;
+    font-size:2rem;
+    color:var(--black);
+}
+.contact .box-container .box a{
+   display: block;
+   font-size: 1.8rem;
+   color:var(--black);
+   
+   line-height: 1.5;
+   margin-top: .5rem;
+}
+.contact .box-container .box a:hover{
+    text-decoration: underline;
+    color:var(--red);
+ }
+
+
+/* ...............Contact Page end..............*/
+
+
+
+/* ...............Playlist Page start......... */
+.playlist .row{
+    display: flex;
+    align-items: flex-end;
+    gap:1.5rem;
+    flex-wrap: wrap;
+    padding: 2rem;
+    padding-top: 1.5rem;
+    background-color: var(--white);
+}
+.playlist h1{
+    color: var(--black);
+    font-size: 2rem;
+    padding-bottom: 1rem;
+}
+.playlist hr{
+    gap:1rem;
+    margin-bottom: 1rem;
+}
+
+.playlist .row .col{
+    flex: 1 1 40rem;
+}
+
+.playlist .row .columns .thumb{
+    position: relative;
+    height: 30rem;
+   
+}
+
+.playlist .row .columns .thumb img{
+    width:100%;
+    height: 100%;
+    border-radius:0.5rem;
+    object-fit:cover;
+}
+.playlist .row .columns .thumb span{
+    position:absolute;
+    top:  26rem;
+    left:49rem;
+    border-radius: 0.5rem;
+    padding: .5rem 1.5rem;
+    font-size: 2rem;
+    color:white;
+    background-color: rgba(0, 0, 0, 0.877);
+}
+
+
+.playlist .row .col .tutor{
+    display:flex;
+    align-items: center;
+    gap:1.7rem;
+    
+}
+
+.playlist .row .col .tutor img{
+    width: 7rem;
+    height: 7rem;
+    border-radius: 50%;
+    object-fit:cover;
+}
+.playlist .row .col .tutor h3{
+    font-size: 2rem;
+    color:var(--black);
+    margin-bottom: 0.5rem;
+}
+.playlist .row .col .tutor span{
+    color:var(--littleblack);
+    font-size: 1.7rem;
+}
+.playlist .row .col .details{
+    padding-top: 2rem;
+}
+.playlist .row .col .details h3{
+    font-size: 2rem;
+    color:var(--black);
+}
+.playlist .row .col .details p{
+    padding: 1rem 0 ;
+    line-height: 1.5 ;
+    font-size: 1.8rem;
+    color:var(--littleblack);
+    text-align: justify;
+}
+.playlist .row .col .details .date{
+    font-size:1.6rem;
+}
+.playlist .row .col .details .date i{
+   color: var(--main-color); 
+   margin-bottom: .5rem;
+}
+.playlist .row .col .details .date span{
+    color: var(--littleblack);
+    margin-bottom: .5rem;
+}
+/* video section */
+
+.video-container .box-container{
+    display:grid;
+    grid-template-columns: repeat(auto-fit , minmax(30rem , 1fr));
+    gap:1.5rem;
+    align-items: flex-start;
+    justify-content: center;
+}
+.video-container .box-container .box{
+    position:relative;
+    border-radius: .5rem;
+    padding: 2rem;
+    background-color: var(--white);
+}
+.video-container .box-container .box:hover{
+box-shadow: 0 0 15px rgba(0, 123, 255, 0.75); 
+}
+.video-container .box-container .box img{
+    height: 20rem;
+    width: 100%;
+    border-radius: .5rem;
+    object-fit:fill;
+}
+
+.video-container .box-container .box i{
+    position:absolute;
+    top:2rem; left:2rem; right:2rem ;
+    background-color: rgba(0, 0, 0, 0.4);
+    height: 20rem;
+    display:flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 4rem;
+    border-radius: .5rem; 
+    color:white;
+    
+    display: none;
+}
+.video-container .box-container .box:hover i{
+   display: flex;
+}
+.video-container .box-container .box h3{
+    font-size: 1.7rem;
+    color:var(--black);
+    margin-top: 1rem;
+}
+.video-container .box-container .box:hover h3{
+    color: #f53b57;
+}
+.video-container .heading{
+    color: var(--black);
+    font-size: 2rem;
+    padding-bottom: 1rem;
+   
+}
+
+
+/* ...............Playlist Page end........... */
+
+
+
+/* ...............Watch Video Section starts.......... */
+.watch-video .video-details{
+    background-color: var(--white);
+    padding: 2rem;
+}
+.watch-video .video-details iframe{
+    width:100%;
+    height: 600px;
+    border-radius: .5rem;
+    margin-bottom: .5rem;
+}
+.watch-video .video-details .title{
+    font-size: 2rem;
+    color:var(--black);
+    padding:1rem 0;
+}
+.watch-video .video-details .info{
+    display: flex;
+    gap:2rem;
+    margin-bottom: .5rem;
+    padding-bottom: .5rem;
+    
+}
+.watch-video .video-details .info p{
+    font-size:1.8rem;
+}
+.watch-video .video-details .info p i{
+    margin-right: 1rem;
+    color:#f53b57;
+}
+.watch-video .video-details .info p span{
+    color:var(--light-color);
+    font-weight: bold;
+}
+.watch-video .video-details .tutor{
+    padding:2rem 0;
+    display:flex;
+    align-items: center;
+    gap:2rem;
+}
+.watch-video .video-details .tutor img{
+    height: 7rem;
+    width: 7rem;
+    border-radius: .5rem;
+    object-fit: cover;
+}
+
+.watch-video .video-details .tutor h3{
+    font-size: 2rem;
+    color:var(--black);
+    margin-bottom: .2rem; 
+}
+
+.watch-video .video-details .tutor span{
+    color:var(--littleblack);
+    font-size: 1.8rem;
+}
+.watch-video .video-details .flex{
+    display: flex;
+    align-items: center;
+    gap:1rem;
+    justify-content: space-between;
+}
+.watch-video .video-details .flex a{
+    margin-top: 0;
+}
+.watch-video .video-details .flex button{
+    background-color:var(--white);
+    cursor: pointer;
+    padding: 1rem 3rem;
+    font-size: 2rem;
+    border-radius: .5rem;
+    border-radius: .5rem;
+    border-width: 3px;      
+    border-color: var(--black);     
+    border-style: solid; 
+}
+
+.watch-video .video-details .flex button i{
+    
+    color: #f53b57;
+    /* margin-right: auto; */
+}
+.watch-video .video-details .flex button span{
+    color:var(--black);
+    font-size: 2rem;
+    font-weight: bold;
+}
+.watch-video .video-details .flex button:hover{
+    background-color: var(--littleblack);
+}
+.watch-video .video-details .flex button:hover i{
+    color: var(--main-color);
+}
+.watch-video .video-details .flex button:hover span{
+    color:var(--white);
+}
+.watch-video .video-details .description{
+    padding-top: 1rem;
+
+}
+.watch-video .video-details .description p{
+    line-height: 1.5;
+    font-size: 1.9rem;
+    color: var(--light-color);
+    /* white-space: pre-line; */
+    text-align: justify;
+}
+
+
+/* ...............Watch Video Section Ends............ */
+
+
+/* ...............Comment Section Start............... */
+
+.comments .heading{
+    font-size: 2rem;
+    color:var(--black);
+    padding:1rem 0;
+}
+.comments .add-comment{
+     background-color: var(--white);
+     border-radius: .5rem;
+     margin-bottom: 2rem;
+     padding: 2rem;
+}
+.comments .add-comment textarea{
+    border-radius: .5rem;
+    padding: 1.4rem;
+    width:100%;
+    height:20rem;
+    background-color: var(--light-bg);
+    resize:none;
+    font-size: 2rem;
+    color:var(--black);
+}
+.comments h1{
+    font-size: 2rem;
+    color:var(--black);
+    padding:1rem 0;
+}
+.comments .show-comments{
+    background-color: var(--white);
+    border-radius: .5rem;
+    padding: 2rem;
+    display: grid;
+    gap:2rem;
+    margin-top: 1rem;
+
+}
+.comments .show-comments .user{
+    display:flex;
+    align-items: center;
+    gap:1.5rem;
+    margin-bottom: 2rem;
+    
+}
+.comments .show-comments .user img{
+    height:5rem;
+    width:5rem;
+    border-radius: 50%;
+    object-fit: cover;
+    background: none;
+}
+.comments .show-comments .user h3{
+    font-size: 2rem;
+    color:var(--black);
+    margin-bottom: .2rem;
+}
+.comments .show-comments .user span{
+    color:var(--littleblack);
+    font-size: 1.5rem;
+}
+.comments .show-comments .text{
+    border-radius: .5rem;
+    background-color: var(--light-bg);
+    padding:1rem 1.5rem;
+    color:var(--black);
+    margin:.5rem 0;
+    position:relative;
+    text-align: justify;
+    font-size: 2rem;
+}
+
+
+
+
+/* ...............Comment Section End............ */
+
+/* ...............Admmin Page Start.............. */
+.form-container form h3{
+    color: #f53b57;
+    font-size: 3rem ;
+    margin-bottom: 3rem;
+    margin-top: 1rem;
+}
+.form-container form{
+    background-color: var(--white);
+    /* border: 3px solid var(--black); */
+}
+
+.form-container form .box{
+   background-color:var(--light-bg);
+   color: var(--black);
+   font-weight: 500;
+   resize: none;
+   /* border: .1px solid var(--black); */
+}
+/* ...............Admin Page End................. */
+
+
+
+
+
+
+/* footer */
+.footer{
+    position:relative;
+    margin-top:3rem;
+    bottom:0 ; right:0 ; left:0;
+    background-color: rgb(255, 255, 255);
+    padding: .1rem .1rem;
+    text-align:center;
+    color:black;
+    font-size:1.8rem;
+}
+
+
+
+/* responsive portion */
+/* @media screen and (max-width:420px){  
+    .header{
+        background-color: rgb(14, 13, 13);
+        border-bottom: var(--border) ;
+        position:sticky;
+        top:0 ; left:0 ; right:0;
+        z-index: 1000;
+    }
+} */
+@media(max-width:1500px){
+    body{
+        padding-left: 0;
+
+    }
+    .sidebar{
+        transition:.2s linear;
+        left:-30rem;
+    }
+    .sidebar.active{
+        left:0;
+        box-shadow: 0 0 0 100vw rgba(0,0,0,.7);
+    }
+
+    .sidebar .closesidebar{
+        display: block;
+    }
+}
+
+
+
+@media (max-width: 991px){
+
+    html{
+        font-size:55%;
+    }
+
+}
+
+@media (max-width:864px){
+    .form-container form .Account{
+        font-size: 1.8rem;
+        margin-top: 1rem;
+        margin-bottom: 1.4rem;
+        margin-left: auto;
+    }
+}
+
+@media (max-width: 768px){
+
+   #search-btn{
+    display :inline-block;
+   }
+   .header .flex .search-form{
+    position : absolute;
+    top: 99% ;
+    left: 0;
+    right: 0;
+    width:  auto;
+    border-top:var(--border);
+    border-bottom: var(--border);
+    background-color: #ffffff;
+    transition : .2s linear;
+    clip-path: polygon(0 0, 0 0, 100% 0);
+   }
+   .header .flex .search-form.active{
+    clip-path: polygon(0 0, 100% 0, 100% 100%, 0% 100%);
+   }
+
+   .playlist .row .columns .thumb{
+    width:auto;
+    height: auto;
+    object-fit: fill;
+   }
+
+   .playlist .row .columns .thumb span{
+    top:auto;
+    left:auto;
+   }
+
+   
+}
+@media (max-width: 450px){
+
+    html{
+        font-size:50%;
+    }
+    .contact .row .image img{
+        height:auto;
+    }
+    .contact .row form{
+        width:auto;
+    }
+    .playlist .row .columns .thumb {
+        width:auto;
+        height: auto;
+        object-fit: fill;
+    }
+    .playlist .row .col .tutor{
+        padding-top:2rem;
+    }
+    .playlist .row .columns .thumb span{
+        top:auto;
+        left:auto;
+    }
+    
+}
+/* .playlist .row .columns .thumb span */

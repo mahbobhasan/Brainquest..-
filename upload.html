@@ -1,0 +1,88 @@
+<!Doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="description" content="Educational Website">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="keywords" content="HTML, CSS, JavaScript , Mysql">
+    <meta name="author" content="Fayaz Ali Muktadir And Mahbob Hasan Sazib">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title> Upload Video </title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
+    <link rel="stylesheet" href="CSS/style.css">
+
+</head>
+
+<body>
+    <header class="header" id ="header">
+            
+
+    </header>
+    <!-- sidebar -->
+    <div class="sidebar" id="sidebar">
+    </div>
+
+    <!-- sidebar end -->
+
+    <!-- register section start -->
+    <section class="form-container">
+        <form action="" method="post">
+            <h3>Upload Video </h3>
+
+            <p>Title<span> *</span></p>
+            <input type="text" name="text2" placeholder="Title...." maxlength="100" required class="box">
+
+            <p>Date<span> *</span></p>
+            <input type="date" name="date" placeholder="Select Date" maxlength="50" required class="box">
+
+            <p>Video Link <span> *</span></p>
+            <textarea id="video-link" name="video-link" placeholder="Enter the link" required class="box"
+                rows="7"></textarea>
+
+            <p>Description</p>
+            <textarea id="description" name="description" placeholder="Write Description..." required class="box"
+                rows="7"></textarea>
+
+            <p>Select Course</p>
+            <select id="cars" name="cars">
+                <optgroup label="German Cars">
+                    <option value="bmw">BMW</option>
+                    <option value="audi">Audi</option>
+                </optgroup>
+                <optgroup label="Japanese Cars">
+                    <option value="toyota" selected>Toyota</option>
+                    <option value="honda" disabled>Honda</option>
+                </optgroup>
+            </select><br>
+            <p>Select Session</p>
+            <select id="cars" name="cars">
+                <optgroup label="German Cars">
+                    <option value="bmw">BMW</option>
+                    <option value="audi">Audi</option>
+                </optgroup>
+                <optgroup label="Japanese Cars">
+                    <option value="toyota" selected>Toyota</option>
+                    <option value="honda" disabled>Honda</option>
+                </optgroup>
+            </select><br>
+            <input type="submit" name="Upload" value="Upload" class="inline-btn" id="upload-video">
+
+        </form>
+
+    </section>
+    <!-- register section end -->
+
+
+
+
+    <!-- footer section shuru -->
+    <footer class="footer">
+        &copy, copyright@2024 by <span>Fayaz Ali Muktadir and Mahbob Hasan Sazib</span> <br>| all rights reserved!
+    </footer>
+    <!-- footer section shesh -->
+
+    <script src="Javascript/script.js">
+    </script>
+    <script src="Javascript/upload_video.js"></script>
+</body>

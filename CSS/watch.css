@@ -1,0 +1,15 @@
+.danger-btn{
+    background-color: red;
+}
+.warning-btn{
+    background-color: rgb(255, 129, 3);
+    /* color: black; */
+}
+
+.danger-btn:hover{
+    background-color: rgb(212, 0, 0);
+}
+
+.warning-btn:hover{
+    background-color: rgb(210, 127, 3);
+}
