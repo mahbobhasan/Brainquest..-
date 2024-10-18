@@ -6,6 +6,7 @@ app.config['DEBUG']=True
 CORS(app)
 from connection import DB_Connector
 from user_controller import get_students,add_user as a_user, update_user as u_user, delete_user as d_user, get_user_details as user_details , login as user_login
+from Authentication import timer
 
 
 connector=DB_Connector()
@@ -38,6 +39,7 @@ def login():
     return user_login(data=data,cursor=connector.cursor)
 
 @app.route("/students")
+@timer("/students")
 def student():
     return (get_students(connector.cursor))
 
