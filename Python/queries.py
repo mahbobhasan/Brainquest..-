@@ -1,5 +1,5 @@
 def login_query(data):
-    query=f"select id, name, username, email from users where username='{data['username']}' and password='{data['password']}'"
+    query=f"select id, name, username, email,role_id from users where username='{data['username']}' and password='{data['password']}'"
     return query
 
 

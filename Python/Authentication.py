@@ -1,8 +1,10 @@
 from flask import request,make_response
 import jwt
 from datetime import datetime
-def timer(endpoint=""):
-    def inner(func):
+from functools import wraps
+def Authenticate(endpoint=""):
+    def Authenticate1(func):
+        @wraps(func)
         def inner2(*args,**kwargs):
             authorization=request.headers.get("Authorization")
             try:
@@ -15,4 +17,5 @@ def timer(endpoint=""):
                 return make_response({"ERROR":f"{e}"},401)
             return func(*args,**kwargs)
         return inner2
-    return inner
+    return Authenticate1
+
