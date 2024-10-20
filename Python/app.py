@@ -69,7 +69,7 @@ def add_student():
 @app.route("/update-user/<int:id>", methods=["PUT"])
 @Authenticate()
 def update_user(id):
-    if Authorization.update_user_authority()==True:
+    if Authorization.update_user_authority(request=request,id=id)==True:
         final=final_dict(request=request)
         image=request.files['image']
         res=u_user(connector,final['main'],id)
@@ -149,7 +149,7 @@ def update_video(id):
         final=final_dict(request=request)
         final["main"]["thumbnail"]=final["main"].pop("image")
         res=u_video(connector=connector,data=final["main"],id=id)
-        if res.status=="200 CREATED" and image.filename!="":
+        if res.status=="200 OK" and image.filename!="":
             image.save(final["file"])
         return res
     return make_response({"ERROR":"You are not Authorized"},401)
