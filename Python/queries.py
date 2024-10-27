@@ -40,3 +40,8 @@ def course_details_query(id):
 def video_details_query(id):
     query=f"select title, url, description, upload_date from videos where id={id}"
     return query
+
+
+def get_comments_query(video_id):
+    query=f"select c.description, c.user_id, u.image from comment c left join users u on c.user_id=u.id where c.video_id={video_id}"
+    return query

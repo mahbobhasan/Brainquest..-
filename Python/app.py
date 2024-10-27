@@ -22,7 +22,8 @@ def upload_file(data):
 
 def final_dict(request):
     data=request.form
-    image=request.files['image']
+    print(request.files)
+    image=request.files["image"]
     dict={}
     file_location=upload_file(data=image)
     for key in data:
@@ -168,11 +169,29 @@ def video_details(id):
 
 
 # Comments Route
-from comment_controller import add_comment as a_comment
-@app.route("/add-comment/id")
+from comment_controller import add_comment as a_comment, update_comment as u_comment , delete_comment as d_comment, get_comments as all_comments
+@app.route("/add-comment/<int:video_id>/<int:user_id>",methods=["POST"])
 @Authenticate()
-def add_comment(id):
-    pass
+def add_comment(video_id,user_id):
+    return a_comment(connector=connector,data=request.form,video_id=video_id,user_id=user_id)
 
+@app.route("/update-comment/<int:id>/<int:user_id>",methods=["PUT"])
+@Authenticate()
+def update_comment(id,user_id):
+    if Authorization.update_user_authority(request=request,id=user_id):
+        return u_comment(connector=connector,data=request.form,id=id)
+    return make_response({"ERROR":"You are not Authorized"},401)
+
+@app.route("/delete-comment/<int:id>/<int:user_id>",methods=["DELETE"])
+@Authenticate()
+def delete_comment(id,user_id):
+    if Authorization.update_user_authority(request=request,id=user_id):
+        return d_comment(connector=connector,id=id)
+    return make_response({"ERROR":"You are not Authorized"},401)
+
+@app.route("/get-comments/<int:id>",methods=["GET"])
+@Authenticate()
+def get_comments(id):
+    return all_comments(cursor=connector.cursor,video_id=id)
 if __name__=="__main__":
     app.run();

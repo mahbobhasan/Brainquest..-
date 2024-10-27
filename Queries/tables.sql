@@ -46,7 +46,20 @@ create table videos(
     on delete cascade
 );
 
-
+create table comment(
+	id int auto_increment primary key,
+    description text not null,
+    video_id int not null,
+    user_id int not null,
+    
+    foreign key(video_id) references videos(id)
+    on update cascade 
+    on delete cascade,
+    
+    foreign key(user_id) references users(id)
+    on update cascade
+    on delete cascade
+)
 
 select * from courses;
 select * from users;
