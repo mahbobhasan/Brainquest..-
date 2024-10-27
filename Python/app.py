@@ -166,5 +166,13 @@ def delete_video(id):
 def video_details(id):
     return v_details(cursor=connector.cursor,id=id)
 
+
+# Comments Route
+from comment_controller import add_comment as a_comment
+@app.route("/add-comment/id")
+@Authenticate()
+def add_comment(id):
+    pass
+
 if __name__=="__main__":
     app.run();
