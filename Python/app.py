@@ -34,7 +34,7 @@ def final_dict(request):
 
 # Convention Ends
 
-@app.route("/login")
+@app.route("/login",methods=["POST"])
 def login():
     data=request.form
     return user_login(data=data,cursor=connector.cursor)

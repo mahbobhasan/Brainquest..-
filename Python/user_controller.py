@@ -20,6 +20,7 @@ def login(data,cursor):
         }
         tok=jwt.encode(payload=payload,key="bhung",algorithm="HS384")
         token={
+            "message":"Successful",
             "token":tok
         }
         return make_response(token,200)

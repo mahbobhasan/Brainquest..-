@@ -1,8 +1,5 @@
 
-
-
 console.log("hello")
-
 async function fetch_api_data(){
     try {
         const params = new URLSearchParams(window.location.search); 
