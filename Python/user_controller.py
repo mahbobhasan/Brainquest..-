@@ -8,22 +8,27 @@ from queries import add_query,update_query,delete_query,login_query
 
 
 def login(data,cursor):
+    print(data)
     query=login_query(data=data)
     try:
         cursor.execute(query)
         info=cursor.fetchone()
-        exp_time=datetime.now()+timedelta(minutes=15)
-        epoch_time=int(exp_time.timestamp())
-        payload={
-            "payload":info,
-            "exp":epoch_time
-        }
-        tok=jwt.encode(payload=payload,key="bhung",algorithm="HS384")
-        token={
-            "message":"Successful",
-            "token":tok
-        }
-        return make_response(token,200)
+        if info is not None:
+            print(info)
+            exp_time=datetime.now()+timedelta(minutes=15)
+            epoch_time=int(exp_time.timestamp())
+            payload={
+                "payload":info,
+                "exp":epoch_time
+            }
+            tok=jwt.encode(payload=payload,key="bhung",algorithm="HS384")
+            token={
+                "message":"Successful",
+                "id":info["id"],
+                "token":tok
+            }
+            return make_response(token,200)
+        return make_response({"message":"Invalid email or password."},400)
     except Exception as e:
         return make_response({"message":f"{e}"},400)
 
@@ -107,16 +112,16 @@ def get_user_details(cursor,id):
         student=cursor.fetchone()
         print(student)
         if student is not None:
-            data={
-                "message":"Successfull",
-                "data":student
-            }
             if student["role_id"]==3:
                 student["role_id"]="admin"
             elif student["role_id"]==1:
                 student["role_id"]="student"
             else:
                 student["role_id"]="teacher"
+            data={
+                "message":"Successful",
+                "data":student
+            }
             return make_response(data,200)
         else:
             return make_response({},204)

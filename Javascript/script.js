@@ -51,7 +51,7 @@ sidebar.innerHTML=`
             <a href="Profile.html" class="btn">Viewprofile</a>
         </div>
         <nav class="navbar">
-            <a href="Home.html"><i class="fas fa-home"></i><span>Home</span></a>
+            <a href="index.html"><i class="fas fa-home"></i><span>Home</span></a>
             <a href="about.html"><i class="fas fa-question"></i><span>About Us</span></a>
             <a href="courses.html"><i class="fas fa-graduation-cap"></i><span>Our Courses</span></a>
             <a href="teachers.html"><i class="fas fa-chalkboard-user"></i><span>Our Teachers</span></a>

@@ -4,7 +4,13 @@ let api_data="";
 
 async function fetch_api_data(){
     try {
-        const response=await fetch("http://127.0.0.1:5000/students")
+        const response=await fetch("http://127.0.0.1:5000/students",{
+            method:"GET",
+            headers:{
+                "token":sessionStorage.getItem("token"),
+                "Content-Type":"applicaton/json"
+            }
+        })
         api_data= await response.json()
         api_data=api_data['data']
         show_users(api_data)

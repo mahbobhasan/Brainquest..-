@@ -26,12 +26,11 @@
 
  <!-- register section start -->
  <section class="form-container">
-    <form action="" method="post" enctype="multipart/form-data">
+    <form action="" method="post" enctype="multipart/form-data" id="update-user-form">
     <h3>Update Your Profile </h3>
     <p>Your Name<span> *</span></p>
-    <input type="text" name="name" placeholder="Name...." maxlength="100" required class="box">
-    <p>Your E-mail<span> *</span></p>
-    <input type="email" name="email" placeholder="abc@gmail.com" maxlength="100" required class="box">
+    <input type="text" name="name" placeholder="Name...." maxlength="100" class="box">
+  
 
     <p>Your Old Password<span> *</span></p>
     <input type="password" name="old_pass" placeholder="Enter password...." maxlength="50" required class="box">
@@ -41,11 +40,11 @@
     <input type="password" name="new_pass" placeholder="Give a strong password...." maxlength="50" required class="box">
 
     <p>Confirm New Password<span> *</span></p>
-    <input type="password" name="con_pass" placeholder="Give the new password again...." maxlength="50" required class="box">
+    <input type="password" name="password" placeholder="Give the new password again...." maxlength="50" required class="box">
 
 
     <p>Select Pic</p>
-    <input type="file" name="image" accept="image/*" required class="box">
+    <input type="file" name="image" accept="image/*"  class="box">
     <input type="submit" name="submit" value="Update" class="inline-btn">
 
 
@@ -65,4 +64,5 @@
        
             <script src="Javascript/script.js">
             </script>
+            <script src="Javascript/update_user.js"></script>
     </body>

@@ -47,15 +47,14 @@ def student():
     return make_response({"Error":"You are not Authorized"},401)
 
 @app.route("/user/<int:id>",methods=["GET"])
-@Authenticate("/user/<int:id>")
+@Authenticate()
 def get_user_details(id):
     return user_details(connector.cursor,id)
 
 @app.route("/uploads/<filename>")
 def get_file(filename):
-    if Authorization.admin_authority(request=request)==True:
-        return send_file(f"uploads/{filename}")
-    return make_response({"Error":"You are not Authorized"},401)
+    return send_file(f"..//uploads//{filename}")
+    
     
 
 @app.route("/add-user", methods=["POST"])
@@ -71,10 +70,11 @@ def add_student():
 @Authenticate()
 def update_user(id):
     if Authorization.update_user_authority(request=request,id=id)==True:
-        final=final_dict(request=request)
         image=request.files['image']
+        final=final_dict(request=request)
         res=u_user(connector,final['main'],id)
         if res.status=="200 OK" and image.filename!="":
+            print("saved")
             image.save(final['file'])
         return res
     return make_response({"ERROR":"You are not Authorized"},401)

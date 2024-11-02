@@ -5,7 +5,13 @@ async function fetch_api_data(){
         const params = new URLSearchParams(window.location.search); 
 
         const id=Number(params.get('id'));
-        const response=await fetch(`http://127.0.0.1:5000/user/${id}`)
+        const response=await fetch(`http://127.0.0.1:5000/user/${id}`,{
+            method:"GET",
+            headers:{
+                "token":sessionStorage.getItem("token"),
+                "Content-Type":"application/json"
+            }
+        })
         api_data= await response.json()
         api_data=api_data['data']
         console.log(api_data)

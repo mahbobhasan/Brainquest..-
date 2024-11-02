@@ -6,9 +6,10 @@ def Authenticate(endpoint=""):
     def Authenticate1(func):
         @wraps(func)
         def inner2(*args,**kwargs):
-            authorization=request.headers.get("Authorization")
+            authorization=request.headers.get("token")
             try:
                 jwt.decode(jwt=authorization,key="bhung",algorithms="HS384")
+                print(jwt.decode(jwt=authorization,key="bhung",algorithms="HS384"))
             except jwt.ExpiredSignatureError:
                 return make_response({"ERROR":"Token Expired!"},401)
             except jwt.InvalidTokenError as e:
