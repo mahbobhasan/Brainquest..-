@@ -11,7 +11,7 @@ const fetch_api=async (payload) =>{
     const res=await fetch(`http://127.0.0.1:5000/login`,{
         method:"POST",
         body:payload
-    })
+    })  
     const data=await res.json()
     console.log(data)
     sessionStorage.setItem("token",data["token"])
