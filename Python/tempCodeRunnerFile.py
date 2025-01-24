@@ -1,1 +1,1 @@
-Authenticate
+/user/<int:id>

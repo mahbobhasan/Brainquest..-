@@ -55,7 +55,6 @@ def get_user_details(id):
 def get_file(filename):
     return send_file(f"..//uploads//{filename}")
     
-    
 
 @app.route("/add-user", methods=["POST"])
 def add_student():
@@ -71,12 +70,42 @@ def add_student():
 def update_user(id):
     if Authorization.update_user_authority(request=request,id=id)==True:
         image=request.files['image']
-        final=final_dict(request=request)
-        res=u_user(connector,final['main'],id)
-        if res.status=="200 OK" and image.filename!="":
-            print("saved")
-            image.save(final['file'])
-        return res
+        data=request.form
+        print(data)
+        print("inside")
+        query= f"select * from users where id={id} and password='{data['password']}'"
+        try:  
+            connector.cursor.execute(query)
+            user=connector.cursor.fetchone()
+            if user is not None:
+                if data['con_pass']!="":
+                    new_dict={}
+                    for key in data:
+                        if key=='password' :
+                            continue
+                        elif key=='con_pass':
+                            new_dict['password']=data[key]
+                        else:
+                            new_dict[key]=data[key]
+                    if image.filename!="":
+                        file_location=upload_file(data=image)
+                        new_dict['image']=f"{request.scheme}://{request.host}/{file_location}"
+                    res=u_user(connector=connector,data=new_dict,id=id)
+                    if res.status=="200 OK" and image.filename!="":
+                        image.save(file_location)
+                    return res
+                else:  
+                    final=final_dict(request=request)
+                    res=u_user(connector,final['main'],id)
+                    if res.status=="200 OK" and image.filename!="":
+                        print("saved")
+                        image.save(final['file'])
+                    return res
+            else:
+                return make_response({'ERROR':'your old password is incorrect'},400)
+        
+        except Exception as e:
+                return make_response({"ERROR":f"{e}"},500)  
     return make_response({"ERROR":"You are not Authorized"},401)
 
 @app.route("/delete-user/<int:id>",methods=["DELETE"])
@@ -86,13 +115,31 @@ def delete_user(id):
         return (d_user(connector,id))
     return make_response({"ERROR":"You are not Authorized"},401)
 
+@app.route("/get-teacher-nameID")
+def get_teacher_nameID():
+    query="select name, id from users where role_id=2"
+    try:
+        connector.cursor.execute(query)
+        teachers=connector.cursor.fetchall()
+        print(teachers)
+        data={
+            "data":teachers,
+            "message":"successful"
+        }
+        return make_response(data,200)
+    except Exception as e:
+        return make_response({"ERROR":f"{e}"},500)
+
 from course_controller import add_course as a_course , update_course as u_course, get_courses as g_courses, get_course_details as course_details,delete_course as d_course 
 
 @app.route("/add-course",methods=["POST"])
 @Authenticate()
 def add_course():
     if Authorization.admin_authority(request=request):
+        print("hello")
         image=request.files['image']
+        print(request.form)
+        print(image)
         final=final_dict(request=request)
         res=a_course(connector=connector,data=final['main'])
         if res.status=="201 CREATED" and image.filename!="":

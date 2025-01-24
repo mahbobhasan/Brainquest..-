@@ -16,7 +16,7 @@ create table users(
 );
 
 create table courses(
-	id int auto_increment primary key,
+	id varchar(10)  primary key,
     name varchar(50) not null,
     description text not null,
     session varchar(7) not null,
@@ -28,16 +28,14 @@ create table courses(
     on update cascade
 );
 
-
 create table videos(
 	id int auto_increment primary key,
     title varchar(200) not null,
     description text,
     thumbnail varchar(150) not null,
     url varchar(200) not null unique,
-    course_id int not null,
+    course_id varchar(10) not null,
     upload_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-
     foreign key(course_id) references courses(id)
     on update cascade
     on delete cascade
@@ -56,7 +54,22 @@ create table comment(
     foreign key(user_id) references users(id)
     on update cascade
     on delete cascade
-)
+);
+
+create table reviews(
+	id int auto_increment primary key,
+    student int not null,
+    course varchar(10) not null,
+    description text,
+    rating int not null,
+    
+    foreign key(student) references users(id)
+    on update cascade 
+    on delete cascade,
+    foreign key (course) references courses(id)
+    on update cascade
+    on delete cascade
+    );
 
 -- select * from courses;
 -- select * from users;

@@ -1,5 +1,5 @@
 console.log("hello")
-const fetch_api=async (id)=>{
+const fetch_dashboard=async (id)=>{
     const res=await fetch(`http://127.0.0.1:5000/user/${id}`,{
         method:"GET",
         headers:{
@@ -9,7 +9,7 @@ const fetch_api=async (id)=>{
     })
     const data=await res.json()
     console.log(data)
-    if (data["message"]==="Successful"){
+    if (!data["ERROR"]){
         console.log(data)
         return data["data"]
     }
@@ -22,15 +22,15 @@ document.addEventListener("DOMContentLoaded",async () => {
     console.log(sessionStorage.getItem("token"))
     const params = new URLSearchParams(window.location.search);
     const id=params.get('id')
-    const data=await fetch_api(id)
+    const data=await fetch_dashboard(id)
     console.log(id)
     if(data!=false){
         const div=document.getElementById("user")
         div.innerHTML=`
              <img src="${data["image"]}" alt="Images/Pic-1.png" >
-                <h3>${data["username"]}</h3>
+                <h3>${data["name"]}</h3>
             <!-- .............................. -->
-            <p>Student</p>
+            <p>${data['role_id']}</p>
             <button class="inline-btn" id="update-btn">Update Profile</button>
         `
     }

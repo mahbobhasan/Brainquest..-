@@ -1,4 +1,3 @@
-# Course Controller.py
 
 from connection import DB_Connector
 
@@ -24,18 +23,18 @@ def add_course(data,connector):
     check=is_teacher(teacher,connector.cursor)
     if check==False or check==-1:
         # print(check)
-        return make_response({"message":"The selected user is not a teacher"},400)
+        return make_response({"ERROR":"The selected user is not a teacher"},400)
     if check is None:
         # print(0)
-        return make_response({"message":"There is a problem in internal server"},500)
+        return make_response({"ERROR":"There is a problem in internal server"},500)
     cursor=connector.cursor
     query=add_query(data=data,table="courses")
     try:
         cursor.execute(query)
         connector.connection.commit()
-        return make_response({"message":"Insertion Successful!"},201)
+        return make_response({"message":"successful"},201)
     except Exception as e:
-        return make_response({"message":f"{e}"},400)
+        return make_response({"ERROR":f"{e}"},400)
 # add_course(data={"teacher_id":2},connector=obj)
 
 def update_course(data,connector,id):

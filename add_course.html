@@ -26,31 +26,25 @@
 
  <!-- register section start -->
  <section class="form-container">
-    <form action="" method="post">
+    <form action="" method="post" id="add-course-form">
+        <p id="message">
+
+        </p>
     <h3>Add a New Course </h3>
 
     <p>Course Title<span> *</span></p>
-    <input type="text" name="text2" placeholder="Title...." maxlength="100" required class="box">
+    <input type="text" name="name" placeholder="Title...." maxlength="100" required class="box">
 
     <p>Course code <span> *</span></p>
-    <input type="text"  name="course_code" maxlength="10" placeholder="CSTE1101" class="box">
+    <input type="text"  name="id" maxlength="10" placeholder="CSTE1101" class="box">
 
     <p>Select Teacher<span> *</span></p>
-    <select id="cars" name="cars">
-        <optgroup label="German Cars">
-            <option value="bmw">BMW</option>
-            <option value="audi">Audi</option>
-        </optgroup>
-        <optgroup label="Japanese Cars">
-            <option value="toyota" selected>Toyota</option>
-            <option value="honda" disabled>Honda</option>
-        </optgroup>
+    <select id="teachers" name="teacher_id" >
     </select><br>
     <p for="session">Session <span> *</span></p>
     <input type="text" name="session" class="box" placeholder="2020-21">
 
-    <p>Date<span> *</span></p>
-    <input type="date" name="date" placeholder="Select Date" maxlength="50" required class="box">
+    
 
     <p> Thumbnail<span> *</span></p>
     <input type="file" name="image" accept="image/*"  required class="box">
@@ -78,4 +72,5 @@
        
             <script src="Javascript/script.js">
             </script>
+            <script src="Javascript/add_course.js"></script>
     </body>

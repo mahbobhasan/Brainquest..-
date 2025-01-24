@@ -1262,10 +1262,6 @@ box-shadow: 0 0 15px rgba(0, 123, 255, 0.75);
     text-align: justify;
     font-size: 2rem;
 }
-
-
-
-
 /* ...............Comment Section End............ */
 
 /* ...............Admmin Page Start.............. */
@@ -1279,7 +1275,6 @@ box-shadow: 0 0 15px rgba(0, 123, 255, 0.75);
     background-color: var(--white);
     /* border: 3px solid var(--black); */
 }
-
 .form-container form .box{
    background-color:var(--light-bg);
    color: var(--black);
@@ -1288,12 +1283,6 @@ box-shadow: 0 0 15px rgba(0, 123, 255, 0.75);
    /* border: .1px solid var(--black); */
 }
 /* ...............Admin Page End................. */
-
-
-
-
-
-
 /* footer */
 .footer{
     position:relative;
@@ -1305,8 +1294,30 @@ box-shadow: 0 0 15px rgba(0, 123, 255, 0.75);
     color:black;
     font-size:1.8rem;
 }
+/* Error */
+.error{
+    background-color: #fe0000;
+    color: #ffffff;
+    font-size: x-large;
+    text-align: center;
+    width: 70%;
+    transition: 1s linear;
+    margin: auto;
+    padding: 10px;
+    border-radius: 10px;
+}
 
-
+.success{
+    background-color: #038d4c;
+    color: rgb(241, 237, 237);
+    font-size: x-large;
+    text-align: center;
+    width: 70%;
+    transition: 1s linear;
+    margin: auto;
+    padding: 10px;
+    border-radius: 10px;
+}
 
 /* responsive portion */
 /* @media screen and (max-width:420px){  
@@ -1321,7 +1332,6 @@ box-shadow: 0 0 15px rgba(0, 123, 255, 0.75);
 @media(max-width:1500px){
     body{
         padding-left: 0;
-
     }
     .sidebar{
         transition:.2s linear;
@@ -1331,22 +1341,15 @@ box-shadow: 0 0 15px rgba(0, 123, 255, 0.75);
         left:0;
         box-shadow: 0 0 0 100vw rgba(0,0,0,.7);
     }
-
     .sidebar .closesidebar{
         display: block;
     }
 }
-
-
-
 @media (max-width: 991px){
-
     html{
         font-size:55%;
     }
-
 }
-
 @media (max-width:864px){
     .form-container form .Account{
         font-size: 1.8rem;
@@ -1355,9 +1358,7 @@ box-shadow: 0 0 15px rgba(0, 123, 255, 0.75);
         margin-left: auto;
     }
 }
-
 @media (max-width: 768px){
-
    #search-btn{
     display :inline-block;
    }
@@ -1376,22 +1377,17 @@ box-shadow: 0 0 15px rgba(0, 123, 255, 0.75);
    .header .flex .search-form.active{
     clip-path: polygon(0 0, 100% 0, 100% 100%, 0% 100%);
    }
-
    .playlist .row .columns .thumb{
     width:auto;
     height: auto;
     object-fit: fill;
    }
-
    .playlist .row .columns .thumb span{
     top:auto;
     left:auto;
    }
-
-   
 }
 @media (max-width: 450px){
-
     html{
         font-size:50%;
     }
@@ -1412,7 +1408,6 @@ box-shadow: 0 0 15px rgba(0, 123, 255, 0.75);
     .playlist .row .columns .thumb span{
         top:auto;
         left:auto;
-    }
-    
+    } 
 }
 /* .playlist .row .columns .thumb span */

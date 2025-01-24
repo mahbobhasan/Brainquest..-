@@ -28,9 +28,9 @@ def login(data,cursor):
                 "token":tok
             }
             return make_response(token,200)
-        return make_response({"message":"Invalid email or password."},400)
+        return make_response({"ERROR":"Invalid email or password."},400)
     except Exception as e:
-        return make_response({"message":f"{e}"},400)
+        return make_response({"ERROR":f"{e}"},400)
 
 def get_students(cursor):
     query="select id, image, name, role_id from Users where role_id=1"
@@ -55,7 +55,7 @@ def get_students(cursor):
             return make_response({},200)
     except Exception as e:
         data={
-            "message":f"{e}",
+            "ERROR":f"{e}",
             "data":""
         }
         return data
@@ -70,28 +70,27 @@ def add_user(connector,data):
         return make_response({'message':"Successfull"},201)
     except Exception as e:
         print(e)
-        return make_response({'message':f'{e}'},400)
+        return make_response({'ERROR':f'{e}'},400)
     
 
 def update_user(connector,data,id):
-    print(data)
+
     cursor=connector.cursor
     for key in data.keys():
-        if key=="username" or key=="email" or key=="id" or key=="email":
-            message={"message":f"you can't update your {key}"}
+        if key=="username" or key=="email" or key=="id" :
+            message={"ERROR":f"you can't update your {key}"}
             return make_response(message,400)
         elif key!="name" and key!="image" and key!="password":
-            message={"message":f"unknown field name {key}"}
+            message={"ERROR":f"unknown field name {key}"}
             return make_response(message,400)
     query=update_query(data=data,table="users",id=id)
     try:
-        cursor.execute("SET SQL_SAFE_UPDATES=0;")
         cursor.execute(query)
         connector.connection.commit()
         return make_response({"message":"Successfully updated."},200)
     except Exception as e:
         print(e)
-        return make_response({'message':f'{e}'},400)
+        return make_response({'ERROR':f'{e}'},400)
     
 def delete_user(connector,id):
     cursor=connector.cursor
@@ -102,11 +101,11 @@ def delete_user(connector,id):
         return make_response({"message":"Successfully Deleted!"},200)
     except Exception as e:
         print(e)
-        return {'message':f'{e}'}
+        return {'ERROR':f'{e}'}
 
 
 def get_user_details(cursor,id):
-    query=f"select image, name, email, username, session, role_id from Users where id={id}"
+    query=f"select id, image, name, email, username, session, role_id from Users where id={id}"
     try:
         cursor.execute(query)
         student=cursor.fetchone()
@@ -124,9 +123,9 @@ def get_user_details(cursor,id):
             }
             return make_response(data,200)
         else:
-            return make_response({},204)
+            return make_response({"ERROR":"No user found"},200)
     except Exception as e:
         data={
-            "message":f"{e}",
+            "ERROR":f"{e}",
         }
         return data
