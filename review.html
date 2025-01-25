@@ -1,0 +1,116 @@
+<!Doctype html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="description" content="Educational Website">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="keywords" content="HTML, CSS, JavaScript , Mysql">
+        <meta name="author" content="Fayaz Ali Muktadir And Mahbob Hasan Sajib">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title> Home </title>
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+        <link rel="stylesheet" href="CSS/style.css">
+
+    </head>
+    <body>
+        <header class="header">
+            <section class="flex">
+                <a href="Home.html" class="logo">BrainQuest..!</a>
+
+                <form action=" " method="post" class="search-form" >         <!-- user input-->
+
+                    <input type="text" name="search_box" placeholder="Search Courses...." required maxlength="100">     
+                    <button type="submit" class="fas fa-search" name="search_box" ></button>
+
+                </form>
+
+                <div class="icons">
+                    <div id="menu-btn" class="fas fa-bars"></div>
+                    <div id="search-btn" class="fas fa-search"></div>
+                    <div id="user-btn" class="fas fa-user"></div>
+                    <div id="toggle-btn" class="fas fa-sun"></div>
+                </div>
+
+                <div class="profile">
+                    <img src="Images/Pic-1.png" alt="">
+                    <!-- need to add database -->
+                    <h3>Username</h3>
+                    <span>Student</span>
+                    <a href="Profile.html" class="btn">Viewprofile</a>
+
+                    <div class="flex-btn">
+                        <a href="Login.html" class="option-btn">Login</a>
+                        <a href="Register.html" class="delete-btn">Register</a>
+                    </div>
+                </div>
+
+
+            </section>
+
+        </header>
+ <!-- sidebar -->
+            <div class="sidebar">
+
+                <div class="close-sidebar">
+                    <i class="fas fa-times"></i>
+                </div>
+
+                <div class="profile">
+                    <img src="Images/Pic-1.png" alt="">
+                    <!-- need to add database -->
+                    <h3>Username</h3>
+                    <span>Student</span>
+                    <a href="Profile.html" class="btn">Viewprofile</a>
+                    </div>
+                <nav class="navbar">
+                    <a href="Home.html"><i class="fas fa-home"></i><span>Home</span></a>
+                    <a href="about.html"><i class="fas fa-question"></i><span>About Us</span></a>
+                    <a href="courses.html"><i class="fas fa-graduation-cap"></i><span>Our Courses</span></a>
+                    <a href="teachers.html"><i class="fas fa-chalkboard-user"></i><span>Our Teachers</span></a>
+                    <a href="contact.html"><i class="fas fa-headset"></i><span>Contact Us</span></a>
+                </nav>  
+            </div>
+
+  <!-- sidebar end -->
+    <!-- review section er shuru  -->
+    <section class="review">
+        <div class="row">
+            <div class="image">
+                <img src="Images/Review.png" alt="Review Image">
+            </div>
+            <form action="" method="post">
+                <h3>Review Section</h3>
+                <!-- <input type="text" placeholder="Enter Your Name" required maxlength="100" name="name" class="box">
+                <input type="email" placeholder="Enter Your E-mail" required maxlength="100" name="email" class="box"> -->
+                <label for="rating" class="rating-label">Rate Us:</label>
+
+
+                <select name="rating" id="rating" class="rating-dropdown" required>
+                    <option value="" disabled selected>Choose a rating</option>
+                    <option value="1">1 - Poor</option>
+                    <option value="2">2 - Fair</option>
+                    <option value="3">3 - Good</option>
+                    <option value="4">4 - Very Good</option>
+                    <option value="5">5 - Excellent</option>
+                </select>
+                <textarea name="msg" placeholder="Enter Your Review" class="box" required rows="4" cols="30"></textarea>
+                <input type="submit" value="Submit" class="inline-btn" name="submit">
+                
+            </form>
+        </div>
+    </section>
+    
+     <!-- review section er shesh -->
+    <!-- footer section shuru -->
+     <footer class="footer">
+        &copy, copyright@2024 by <span>Fayaz Ali Muktadir and Mahbob Hasan Sajib</span> <br>| all rights reserved!
+     </footer>
+
+          <!-- footer section shesh -->
+          <script src="Javascript/script.js">
+         
+        
+            </script>
+    </body>
+   

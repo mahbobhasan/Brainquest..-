@@ -32,16 +32,17 @@ def delete_query(table,id):
 
 
 def course_details_query(id):
-    query=f"select name, description, teacher_id from courses where id={id}"
-    query2=f"select id, title, thumbnail from videos where course_id={id}"
+    query=f"select c.name as name, c.image as image, c.description as description, c.upload_date as upload_date, t.name as teacher, t.image as teacher_image, (select count(*) from videos where course_id='{id}') as course_number from courses c join users t on c.teacher_id=t.id where c.id='{id}'"
+    query2=f"select id, title, thumbnail from videos where course_id='{id}'"
+    print(query)
     return {"q1":query,"q2":query2}
 
 
 def video_details_query(id):
-    query=f"select title, url, description, upload_date from videos where id={id}"
+    query=f"select v.title as title, v.url as url, v.description as description, v.upload_date as upload_date, c.id as course_id, t.name as teacher, t.image as teacher_image from videos v join courses c on v.course_id=c.id join users t on c.teacher_id=t.id where v.id={id}"
     return query
 
 
 def get_comments_query(video_id):
-    query=f"select c.description, c.user_id, u.image from comment c left join users u on c.user_id=u.id where c.video_id={video_id}"
+    query=f"select c.description as description ,c.upload_date as upload_date, c.user_id as user_id, u.image as user_image, u.name as name from comment c join users u on c.user_id=u.id where c.video_id={video_id}"
     return query

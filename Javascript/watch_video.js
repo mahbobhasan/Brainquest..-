@@ -1,4 +1,4 @@
-document.addEventListener("DOMContentLoaded",async(event)=>{
+document.addEventListener("DOMContentLoaded", async(event)=>{
     const fetch_api= async (id)=>{
         try{
             const res=await fetch(`http://127.0.0.1:5000/user/${id}`,{
@@ -179,58 +179,111 @@ document.addEventListener("DOMContentLoaded",async(event)=>{
             disableDarkMode();
         }
     };
-})
+   
+    const fetch_video= async(id) =>{
+        try{
 
-console.log("hello")
-let api_data="";
+            const res= await fetch(`http://127.0.0.1:5000/video-details/${id}`,{
+                method:"GET",
+                headers:{
+                    "token":sessionStorage.getItem("token"),
+                    "Content-Type":"application/json"
+                }
+            })
+            const js= await res.json()
+            console.log(js)
+            if(!js["ERROR"]){
+                const data= await js['data']
+                const video_details=document.getElementById("video-details")
+                video_details.innerHTML=`
+                    <iframe width="560" height="315" src="${data['url']};
+                    start=1" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write;
+                    encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin"
+                    allowfullscreen></iframe>
+                    <h3 class="title">${data['title']}</h3>
+                    <div class="info">
+                        <p><i class="fas fa-calendar"></i><span>${data['upload_date']}</span></p>
+                        <p><i class="fas fa-heart"></i><span>3k Likes</span></p>
+                    </div>
+                    <hr style="height:2px; border-width:0; color:rgb(145, 145, 145); background-color:rgb(145, 145, 145)">
+                    <div class="tutor">
+                        <img src="${data['teacher_image']}" alt="">
+                        <div>
+                            <h3>${data['teacher']}</h3>
+                            <span>Physics Co-ordinator</span>
+                        </div>
+                    </div>
+                    <div class="flex">
+                        <a href="playlist.html?id=${data['course_id']}" class="inline-btn">View Playlist</a>
+                        <button><i class="fas fa-heart"></i><span> </span><span> Like</span></button>
+                    </div>
 
+                    <div class="description">
+                        <p>${data.description}.
+                        </p>
+                    </div>
+                `
+            }
+        }
+        catch(error){
+            console.log(error.message)
+        }
+    }
+    const fetch_comment_post= async(payload,id,user_id)=>{
+        try{
+            const res= await fetch(`http://127.0.0.1:5000/add-comment/${id}/${user_id}`,{
+                method:"POST",
+                body:payload,
+                headers:{
+                    "token":sessionStorage.getItem("token")
+                }
+            })
+            const data= await res.json()
+        }
+        catch(error){
 
-async function fetch_api_data(){
-    try {
-        const response=await fetch("http://127.0.0.1:5000/students",{
+        }
+    }
+    const comment_container=document.getElementById("show-comments")
+    const fetch_comment_get= async(id)=>{
+        const res= await fetch(`http://127.0.0.1:5000/get-comments/${id}`,{
             method:"GET",
             headers:{
                 "token":sessionStorage.getItem("token"),
-                "Content-Type":"applicaton/json"
+                "Content-Type":"application/json"
             }
         })
-        api_data= await response.json()
-        api_data=api_data['data']
-        show_users(api_data)
-        console.log(api_data)
-    } catch (error) {
-        console.log(error)
+        const data= await res.json()
+        console.log(data)
+        if(!data["ERROR"]){
+            const comments=data['data']
+            comments.map(comment=>{
+                const div=document.createElement("div")
+                div.classList="box"
+                div.innerHTML=`
+                    <div class="user">
+                        <img src="${comment.user_image}" alt="">
+                        <div>
+                            <h3>${comment.name}</h3>
+                            <span>${comment.upload_date}</span>
+                        </div>
+                    </div>
+                    <div class="text">${comment.description}</div>
+                `
+                comment_container.appendChild(div)
+            })
+            
+        }
     }
-}
-fetch_api_data()
-
-
-function show_users(data){
-    const box_container=document.getElementById('box-container')
-    box_container.classList='box-container'
-    box_container.innerHTML=``
-    for(user of data){
-        const div=document.createElement('div')
-        div.classList.add("box")
-        console.log(user.name)
-        div.innerHTML=`
-            <div class="tutor">
-                <img src="${user.image}" alt="">
-                <div>
-                    <h3>${user.name}</h3>
-                </div>
-            </div>
-            <a href="tutors_profile.html?id=${user.id}" class="inline-btn" >View Profile</a>
-        
-        `
-        box_container.appendChild(div)
-    }
-    // const view_profile_btns=document.querySelectorAll(".inline-btn")
-    // view_profile_btns.forEach(button=>{
-    //     button.addEventListener('click',function(event){
-    //         localStorage.setItem('pk',button.id)
-    //     })
-    // })
-    
-
-}
+    const params=new URLSearchParams(window.location.search)
+    await fetch_video(params.get("id"))
+    await fetch_comment_get(params.get("id"))
+    const comment_form=document.getElementById("add-comment")
+    comment_form.addEventListener("submit",async(event)=>{
+        event.preventDefault()
+        const frm=event.target
+        const payload=new FormData(frm)
+        await fetch_comment_post(payload,params.get("id"),localStorage.getItem("id"))
+        await fetch_comment_get(params.get("id"))
+    })
+})

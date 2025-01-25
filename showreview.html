@@ -1,0 +1,204 @@
+<!Doctype html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="description" content="Educational Website">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="keywords" content="HTML, CSS, JavaScript , Mysql">
+        <meta name="author" content="Fayaz Ali Muktadir And Mahbob Hasan Sajib">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title> Home </title>
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
+        <link rel="stylesheet" href="CSS/style.css">
+
+    </head>
+    <body>
+        <header class="header">
+            <section class="flex">
+                <a href="Home.html" class="logo">BrainQuest..!</a>
+
+                <form action=" " method="post" class="search-form" >         <!-- user input-->
+
+                    <input type="text" name="search_box" placeholder="Search Courses...." required maxlength="100">     
+                    <button type="submit" class="fas fa-search" name="search_box" ></button>
+
+                </form>
+
+                <div class="icons">
+                    <div id="menu-btn" class="fas fa-bars"></div>
+                    <div id="search-btn" class="fas fa-search"></div>
+                    <div id="user-btn" class="fas fa-user"></div>
+                    <div id="toggle-btn" class="fas fa-sun"></div>
+                </div>
+
+                <div class="profile">
+                    <img src="Images/Pic-1.png" alt="">
+                    <!-- need to add database -->
+                    <h3>Username</h3>
+                    <span>Student</span>
+                    <a href="Profile.html" class="btn">Viewprofile</a>
+
+                    <div class="flex-btn">
+                        <a href="Login.html" class="option-btn">Login</a>
+                        <a href="Register.html" class="delete-btn">Register</a>
+                    </div>
+                </div>
+
+
+            </section>
+
+        </header>
+ <!-- sidebar -->
+            <div class="sidebar">
+
+                <div class="close-sidebar">
+                    <i class="fas fa-times"></i>
+                </div>
+
+                <div class="profile">
+                    <img src="Images/Pic-1.png" alt="">
+                    <!-- need to add database -->
+                    <h3>Username</h3>
+                    <span>Student</span>
+                    <a href="Profile.html" class="btn">Viewprofile</a>
+                    </div>
+                <nav class="navbar">
+                    <a href="Home.html"><i class="fas fa-home"></i><span>Home</span></a>
+                    <a href="about.html"><i class="fas fa-question"></i><span>About Us</span></a>
+                    <a href="courses.html"><i class="fas fa-graduation-cap"></i><span>Our Courses</span></a>
+                    <a href="teachers.html"><i class="fas fa-chalkboard-user"></i><span>Our Teachers</span></a>
+                    <a href="contact.html"><i class="fas fa-headset"></i><span>Contact Us</span></a>
+                </nav>  
+            </div>
+
+  <!-- sidebar end -->
+ 
+  <section class="review-view">
+    <div class="container">
+        <div class="review-box">
+            <div class="review-header">
+                <img src="Images/T3.png" alt="Student Picture" class="student-img">
+                <div class="review-info">
+                    <h3>John Doe</h3>
+                    <p>Rating: <span class="rating">4/5</span></p>
+                </div>
+            </div>
+            <hr>
+            <p class="review-text">This course was incredibly informative! The examples were practical, and I learned so much about electricity and magnetism.</p>
+        </div>
+
+       
+        <div class="review-box">
+            <div class="review-header">
+                <img src="Images/T5.jpg" alt="Student Picture" class="student-img">
+                <div class="review-info">
+                    <h3>Jane Smith</h3>
+                    <p>Rating: <span class="rating">5/5</span></p>
+                </div>
+            </div>
+            <hr>
+            <p class="review-text">Amazing course! The instructor explained the concepts clearly, and the visuals made it easy to understand.</p>
+        </div>
+        <div class="review-box">
+            <div class="review-header">
+                <img src="Images/T6.png" alt="Student Picture" class="student-img">
+                <div class="review-info">
+                    <h3>Jane Smith</h3>
+                    <p>Rating: <span class="rating">5/5</span></p>
+                </div>
+            </div>
+            <hr>
+            <p class="review-text">Amazing course! The instructor explained the concepts clearly, and the visuals made it easy to understand.</p>
+        </div>
+    </div>
+</section>
+
+    <!-- footer section shuru -->
+     <footer class="footer">
+        &copy, copyright@2024 by <span>Fayaz Ali Muktadir and Mahbob Hasan Sajib</span> <br>| all rights reserved!
+     </footer>
+     <!-- footer section shesh -->
+        <script >
+            document.addEventListener('DOMContentLoaded', function() {
+                let body=document.body;
+                let prof = document.querySelector('.header .flex .profile');
+                document.querySelector('#user-btn').onclick = () => {
+                    prof.classList.toggle('active');
+                    search.classList.remove('active');
+                }
+
+
+                let search = document.querySelector('header .flex .search-form');
+                document.querySelector('#search-btn').onclick = () =>{
+                    search.classList.toggle('active');
+                    prof.classList.remove('active');
+                }   
+
+                let side = document.querySelector('.sidebar');
+                document.querySelector('#menu-btn').onclick = () =>{
+                   
+                    side.classList.toggle('active');
+                    body.classList.toggle('active');
+                    console.log(side.classList); 
+                }   
+
+                // document.querySelector('.sidebar .close-sidebar').onclick =() =>{
+                //     side.classList.remove('active');
+                //     body.classList.remove('active');
+                // }
+
+                document.querySelector('.sidebar .close-sidebar').onclick =() =>{
+                      
+                    side.classList.toggle('active');
+                    body.classList.toggle('active');
+                     
+                }
+
+                
+             
+
+                window.onscroll = () => {
+                    prof.classList.remove('active');
+                    search.classList.remove('active');
+                    
+                    if(innerWidth<1200){
+                        side.classList.remove('active');
+                        body.classList.remove('active');
+                    }
+
+                    
+                }
+            });
+
+                       // toggle button eikhane
+                let toggleBtn = document.querySelector('#toggle-btn');
+                let darkMode = localStorage.getItem('dark-mode');
+                let body = document.querySelector('body');
+
+                const enableDarkMode = () => {
+                    toggleBtn.classList.replace('fa-sun', 'fa-moon');
+                    body.classList.add('dark');
+                    localStorage.setItem('dark-mode', 'enabled');
+                };
+
+                const disableDarkMode = () => {
+                    toggleBtn.classList.replace('fa-moon', 'fa-sun');
+                    body.classList.remove('dark');
+                    localStorage.setItem('dark-mode', 'disabled');
+                };
+
+                if (darkMode === 'enabled') {
+                    enableDarkMode();
+                }
+
+                toggleBtn.onclick = () => {
+                    let darkMode = localStorage.getItem('dark-mode');
+                    if (darkMode === 'disabled') {
+                        enableDarkMode();
+                    } else {
+                        disableDarkMode();
+                    }
+                };  
+            </script>
+    </body>
+   

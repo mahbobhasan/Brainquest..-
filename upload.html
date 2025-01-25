@@ -27,44 +27,29 @@
 
     <!-- register section start -->
     <section class="form-container">
-        <form action="" method="post">
+        <form action="" method="post" id="add-video-form">
             <h3>Upload Video </h3>
 
             <p>Title<span> *</span></p>
-            <input type="text" name="text2" placeholder="Title...." maxlength="100" required class="box">
+            <input type="text" name="title" placeholder="Title...." maxlength="100" required class="box">
 
-            <p>Date<span> *</span></p>
-            <input type="date" name="date" placeholder="Select Date" maxlength="50" required class="box">
 
             <p>Video Link <span> *</span></p>
-            <textarea id="video-link" name="video-link" placeholder="Enter the link" required class="box"
+            <textarea id="video-link" name="url" placeholder="Enter the url" required class="box"
                 rows="7"></textarea>
+
+            <p>Select Thumbnail</p>
+            <input type="file" name="image" accept="image/*"  class="box">
 
             <p>Description</p>
-            <textarea id="description" name="description" placeholder="Write Description..." required class="box"
-                rows="7"></textarea>
+            <textarea id="description" name="description" placeholder="Write Description..." required class="box" rows="7"></textarea>
 
             <p>Select Course</p>
-            <select id="cars" name="cars">
-                <optgroup label="German Cars">
+            <select id="courses" name="course_id">
                     <option value="bmw">BMW</option>
                     <option value="audi">Audi</option>
-                </optgroup>
-                <optgroup label="Japanese Cars">
                     <option value="toyota" selected>Toyota</option>
                     <option value="honda" disabled>Honda</option>
-                </optgroup>
-            </select><br>
-            <p>Select Session</p>
-            <select id="cars" name="cars">
-                <optgroup label="German Cars">
-                    <option value="bmw">BMW</option>
-                    <option value="audi">Audi</option>
-                </optgroup>
-                <optgroup label="Japanese Cars">
-                    <option value="toyota" selected>Toyota</option>
-                    <option value="honda" disabled>Honda</option>
-                </optgroup>
             </select><br>
             <input type="submit" name="Upload" value="Upload" class="inline-btn" id="upload-video">
 
@@ -82,7 +67,5 @@
     </footer>
     <!-- footer section shesh -->
 
-    <script src="Javascript/script.js">
-    </script>
     <script src="Javascript/upload_video.js"></script>
 </body>

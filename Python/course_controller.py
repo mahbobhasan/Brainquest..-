@@ -3,6 +3,19 @@ from connection import DB_Connector
 
 obj=DB_Connector()
 
+def is_admin(id,cursor):
+    query=f"select role_id from users where id={id}"
+    try:
+        cursor.execute(query)
+        info=cursor.fetchone()
+        if cursor.rowcount==0:
+            return -1
+        if info["role_id"]==3:
+            return True
+        return False
+    except:
+        return False
+
 def is_teacher(teacher,cursor):
     query=f"select role_id from users where id={teacher}"
     try:
@@ -14,7 +27,7 @@ def is_teacher(teacher,cursor):
             return True
         return False
     except:
-        pass
+        return False
 
 from flask import make_response
 from queries import add_query,update_query,delete_query,course_details_query
@@ -43,22 +56,29 @@ def update_course(data,connector,id):
     try:
         cursor.execute(query)
         connector.connection.commit()
-        return make_response({"message":"Successfully Updated!"},200)
+        return make_response({"message":"successful"},200)
     except Exception as e:
-        return make_response({"message":f"{e}"},400)
+        return make_response({"ERROR":f"{e}"},400)
 
-def get_courses(cursor):
-    query="select id, name, image from courses"
+def get_courses(cursor,id=0):
+    query=""
+    if id==0 or is_admin(id=id,cursor=cursor):
+        query="select c.id as id, c.name as name, c.image as image, c.upload_date as upload_date, t.name as teacher_name, t.image as teacher_image from courses c join users t on c.teacher_id=t.id"
+    elif is_teacher(id,cursor):
+        query=f"select c.id as id, c.name as name, c.image as image, c.upload_date as upload_date, t.name as teacher_name, t.image as teacher_image from courses c join users t on c.teacher_id=t.id where t.id={id}"
+    else:
+        query=f"select c.id as id, c.name as name, c.image as image, c.upload_date as upload_date, t.name as teacher_name, t.image as teacher_image from courses c join users t on c.teacher_id=t.id where c.session=(select session from users where id={id})"
     try:
         cursor.execute(query)
         courses=cursor.fetchall()
         data={
-            "message":"Successfull",
+            "message":"successful",
             "data":courses
         }
         return make_response(data,200)
     except Exception as e:
-        return make_response({"message":f"{e}"}, 400)
+        print(e)
+        return make_response({"ERROR":f"{e}"}, 400)
     
 
 def get_course_details(cursor,id):
@@ -72,12 +92,12 @@ def get_course_details(cursor,id):
         videos=cursor.fetchall()
         details={"course":course,"videos":videos}
         data={
-            "message":"Successfull",
+            "message":"successful",
             "data":details
         }
         return make_response(data,200)
     except Exception as e:
-        return make_response({"message":f"{e}"},400)
+        return make_response({"ERROR":f"{e}"},400)
     
 def delete_course(connector,id):
     cursor=connector.cursor
@@ -85,6 +105,6 @@ def delete_course(connector,id):
     try:
         cursor.execute(query)
         connector.connection.commit()
-        return make_response({"message":"Successfully Deleted!"},200)
+        return make_response({"message":"Successful"},200)
     except Exception as e:
-        return make_response({"message":f"{e}"},400)
+        return make_response({"ERROR":f"{e}"},400)

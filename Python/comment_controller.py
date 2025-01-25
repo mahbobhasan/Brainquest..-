@@ -2,10 +2,12 @@ from flask import make_response
 import queries
 def add_comment(connector,data,video_id,user_id):
     final_data={}
+    print(data)
     for key in data.keys():
         final_data[key]=data[key]
     final_data["video_id"]=video_id
     final_data["user_id"]=user_id
+    print(final_data)
     query=queries.add_query(data=final_data,table="comment")
     cursor=connector.cursor
     try:
@@ -13,6 +15,7 @@ def add_comment(connector,data,video_id,user_id):
         connector.connection.commit()
         return make_response({"message":"Successfully created"},201)
     except Exception as e:
+        print(e)
         return make_response({"ERROR":f"{e}"},400)
 
 def update_comment(connector,data,id):

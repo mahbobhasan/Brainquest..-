@@ -166,14 +166,31 @@ def delete_coruse(id):
     return make_response({"ERROR":"You ar not Authorized"},401)
 
 @app.route("/get-courses")
-@Authenticate()
 def get_coruses():
     return g_courses(cursor=connector.cursor)
 
-@app.route("/course/<int:id>")
+@app.route("/courses-with-id")
+def courses_with_id():
+    query="select id, name from courses"
+    try:
+        connector.cursor.execute(query)
+        courses=connector.cursor.fetchall()
+        if len(courses)>0:
+            return make_response({"data":courses,"message":"successful"},200)
+        else:
+            return make_response({"ERROR":"empty"},200)
+    except Exception as e:
+        return make_response({"ERROR":e},500)
+    
+@app.route("/get-courses/<int:id>")
+@Authenticate()
+def get_courses_with_id(id):
+    return g_courses(cursor=connector.cursor,id=id)
+@app.route("/course/<string:id>")
 @Authenticate()
 def get_course_details(id):
-    return course_details(cursor=connector.cursor,id=id)
+    if Authorization.admin_authority(request=request) or Authorization.teacher_authority(request=request) or Authorization.student_authority(request=request):
+        return course_details(cursor=connector.cursor,id=id)
 
 from videos_controller import add_video as a_video, delete_video as d_video, update_video as u_video, video_details as v_details
 @app.route("/add-video",methods=["POST"])
