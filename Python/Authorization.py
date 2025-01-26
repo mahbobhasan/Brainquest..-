@@ -6,7 +6,7 @@ def decrypt(token):
 
 def get_students_authority(request):
     data=decrypt(request.headers.get("token"))
-    if data['role_id']==3 or data['role_id']==2:
+    if data['role_id']==3 or data['role_id']==2 or data['role_id']==1:
         return True
     return False
 

@@ -83,13 +83,7 @@ document.addEventListener("DOMContentLoaded",async(event)=>{
                     <a href="courses.html"><i class="fas fa-graduation-cap"></i><span>Our Courses</span></a>
                     <a href="teachers.html"><i class="fas fa-chalkboard-user"></i><span>Our Teachers</span></a>
                     <div class="dropdown-container">
-                        <a href="#"><i class="fas fa-users"></i> <span>Our Students</span></a>
-                        <div class="dropdown-content">
-                            <a href="Users.html"id="2020-21">Session <span >2020-21</span></a>
-                            <a href="Users.html"id="2021-22">Session <span >2021-22</span></a>
-                            <a href="Users.html"id="2022-23">Session <span >2022-23</span></a>
-                            <a href="Users.html"id="2023-24">Session <span >2023-24</span></a>
-                        </div>
+                        <a href="Users.html"><i class="fas fa-users"></i> <span>Our Students</span></a>
                     </div>
                     <a href="contact.html"><i class="fas fa-headset"></i><span>Contact Us</span></a>
                 `

@@ -83,13 +83,7 @@ document.addEventListener("DOMContentLoaded", async(event)=>{
                     <a href="courses.html"><i class="fas fa-graduation-cap"></i><span>Our Courses</span></a>
                     <a href="teachers.html"><i class="fas fa-chalkboard-user"></i><span>Our Teachers</span></a>
                     <div class="dropdown-container">
-                        <a href="#"><i class="fas fa-users"></i> <span>Our Students</span></a>
-                        <div class="dropdown-content">
-                            <a href="Users.html"id="2020-21">Session <span >2020-21</span></a>
-                            <a href="Users.html"id="2021-22">Session <span >2021-22</span></a>
-                            <a href="Users.html"id="2022-23">Session <span >2022-23</span></a>
-                            <a href="Users.html"id="2023-24">Session <span >2023-24</span></a>
-                        </div>
+                        <a href="Users.html"><i class="fas fa-users"></i> <span>Our Students</span></a>
                     </div>
                     <a href="contact.html"><i class="fas fa-headset"></i><span>Contact Us</span></a>
                 `
@@ -179,44 +173,43 @@ document.addEventListener("DOMContentLoaded", async(event)=>{
             disableDarkMode();
         }
     };
+    console.log("hello")
+    async function fetch_api_data(){
+        try {
+            const params = new URLSearchParams(window.location.search); 
+    
+            const id=Number(params.get('id'));
+            const response=await fetch(`http://127.0.0.1:5000/user/${id}`,{
+                method:"GET",
+                headers:{
+                    "token":sessionStorage.getItem("token"),
+                    "Content-Type":"application/json"
+                }
+            })
+            api_data= await response.json()
+            api_data=api_data['data']
+            console.log(api_data)
+            show_details(api_data)
+        } catch (error) {
+            // console.log(error)
+        }
+    }
+    fetch_api_data()
+    
+    const show_details=(data)=>{
+        const container=document.querySelector('.details')
+        container.innerHTML=`
+                <div class="tutor">
+                    <img src="${data.image}" alt="">
+                    <h3>${data.name}</h3>
+                    <span>${data.role_id}</span>
+                </div>
+                <div class="flex">
+                    <p>Total Playlist :   <span>4</span></p>
+                    <p>Total Videos :   <span>11</span></p>
+                    <p>Total Comments : <span>52</span></p>
+                </div>
+        `
+    }
 })
 
-
-console.log("hello")
-async function fetch_api_data(){
-    try {
-        const params = new URLSearchParams(window.location.search); 
-
-        const id=Number(params.get('id'));
-        const response=await fetch(`http://127.0.0.1:5000/user/${id}`,{
-            method:"GET",
-            headers:{
-                "token":sessionStorage.getItem("token"),
-                "Content-Type":"application/json"
-            }
-        })
-        api_data= await response.json()
-        api_data=api_data['data']
-        console.log(api_data)
-        show_details(api_data)
-    } catch (error) {
-        // console.log(error)
-    }
-}
-fetch_api_data()
-
-const show_details=(data)=>{
-    const container=document.querySelector('.details')
-    container.innerHTML=`
-            <div class="tutor">
-                <img src="${data.image}" alt="">
-                <h3>${data.name}</h3>
-                <span>${data.role_id}</span>
-            </div>
-            <div class="flex">
-                <p>Total Playlist :   <span>4</span></p>
-                <p>Total Videos :   <span>11</span></p>
-                <p>Total Comments : <span>52</span></p>
-            </div>
-    `
-}

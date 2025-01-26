@@ -100,12 +100,19 @@ def update_user(id):
                     if res.status=="200 OK" and image.filename!="":
                         image.save(file_location)
                     return res
-                else:  
-                    final=final_dict(request=request)
-                    res=u_user(connector,final['main'],id)
+                else:
+                    new_dict={}
+                    for key in data:
+                        if key=='con_pass' :
+                            continue
+                        else:
+                            new_dict[key]=data[key]
+                    if image.filename!="":
+                        file_location=upload_file(data=image)
+                        new_dict['image']=f"{request.scheme}://{request.host}/{file_location}"
+                    res=u_user(connector=connector,data=new_dict,id=id)
                     if res.status=="200 OK" and image.filename!="":
-                        print("saved")
-                        image.save(final['file'])
+                        image.save(file_location)
                     return res
             else:
                 return make_response({'ERROR':'your old password is incorrect'},400)

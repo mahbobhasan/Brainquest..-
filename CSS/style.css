@@ -590,6 +590,13 @@ section{
    color:  purple;   
   }
 
+  .btn-container{
+    display: flex;
+    gap: 20px;
+    flex-wrap: wrap;
+    justify-content: space-evenly;
+  }
+
 /* profile page end  */
 
 
@@ -929,7 +936,7 @@ section{
 /* ...............Playlist Page start......... */
 .playlist .row{
     display: flex;
-    align-items: flex-start;
+    align-items: center;
     gap:1.5rem;
     padding: 2rem;
     padding-top: 1.5rem;
