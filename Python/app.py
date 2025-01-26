@@ -43,7 +43,13 @@ def login():
 @Authenticate("/students")
 def student():
     if Authorization.get_students_authority(request=request)==True:
-        return (get_students(connector.cursor))
+        return (get_students(connector.cursor,role=1))
+    return make_response({"Error":"You are not Authorized"},401)
+@app.route("/teachers",methods=['GET'])
+@Authenticate()
+def teacher():
+    if Authorization.get_students_authority(request=request)==True:
+        return (get_students(connector.cursor,role=2))
     return make_response({"Error":"You are not Authorized"},401)
 
 @app.route("/user/<int:id>",methods=["GET"])
@@ -182,10 +188,27 @@ def courses_with_id():
     except Exception as e:
         return make_response({"ERROR":e},500)
     
-@app.route("/get-courses/<int:id>")
+@app.route("/get-courses-with-id-matching-session/<int:user_id>")
+def get_courses_with_id_matching_session(user_id):
+    query=f'select c.id, c.name from courses c join users s on c.session=s.session where s.id={user_id}'
+    print(query)
+    try:
+        connector.cursor.execute(query)
+        course=connector.cursor.fetchall()
+        if course is not None:
+            data={
+                "data":course,
+                "message":"successful"
+            }
+            return make_response(data,200)
+        else:
+            return make_response({"ERROR":"No data"},200)
+    except Exception as e:
+        return make_response({"ERROR":e},500)
+@app.route("/get-courses/<int:user_id>")
 @Authenticate()
-def get_courses_with_id(id):
-    return g_courses(cursor=connector.cursor,id=id)
+def get_courses(user_id):
+    return g_courses(cursor=connector.cursor,id=user_id)
 @app.route("/course/<string:id>")
 @Authenticate()
 def get_course_details(id):
@@ -257,5 +280,38 @@ def delete_comment(id,user_id):
 @Authenticate()
 def get_comments(id):
     return all_comments(cursor=connector.cursor,video_id=id)
+
+
+
+@app.route("/add-review/<int:user_id>",methods=["POST"])
+@Authenticate()
+def add_review(user_id):
+    data=request.form
+    print(data)
+    query=f"insert into reviews (student,course,description,rating) values({user_id},'{data['course']}','{data['description']}',{data['rating']})"
+    try:
+        connector.cursor.execute(query)
+        connector.connection.commit()
+        return make_response({"message":"successful"},201)
+    except Exception as e:
+        return make_response({"ERROR":e},500)
+    # return make_response({"data":query},200)
+
+@app.route("/get-review/<string:course_id>",methods=["GET"])
+def get_reviews(course_id):
+    query=f"select s.name as name, s.image as image, r.rating as rating, r.description as description from reviews r join users s on r.student=s.id where r.course='{course_id}'"
+    try:
+        connector.cursor.execute(query)
+        reviews=connector.cursor.fetchall()
+        if len(reviews)>0:
+            data={
+                "data":reviews,
+                "message":"successful"
+            }
+            return make_response(data,200)
+        else:
+            return make_response({"ERROR":"No reviews"},200)
+    except Exception as e:
+        return make_response({"ERROR":e},500)
 if __name__=="__main__":
     app.run();

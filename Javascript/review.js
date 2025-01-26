@@ -1,5 +1,4 @@
-
-document.addEventListener("DOMContentLoaded",async (event)=>{
+document.addEventListener("DOMContentLoaded", async(event)=>{
     const fetch_api= async (id)=>{
         try{
             const res=await fetch(`http://127.0.0.1:5000/user/${id}`,{
@@ -58,7 +57,7 @@ document.addEventListener("DOMContentLoaded",async (event)=>{
             const div2=document.getElementById('sidebar-profile')
             const navbar=document.getElementById('navbar')
             const data= await fetch_api(localStorage.getItem("id"))
-            console.log( data)
+            console.log( await data)
             if(!data["ERROR"]){
                 div.innerHTML=`
                     <img src="${data['data']['image']}" alt="" id="header-profile-img">
@@ -179,69 +178,71 @@ document.addEventListener("DOMContentLoaded",async (event)=>{
         } else {
             disableDarkMode();
         }
-    }; 
-    console.log("hello")
-    const fetch_courses_with_id=async (id)=>{
+    };
+    const params= new URLSearchParams(window.location.search)
+    const fetch_course_with_id= async(user_id)=>{
         try{
-            const res=await fetch(`http://127.0.0.1:5000/get-courses/${id}`,{
+            const res=await fetch(`http://127.0.0.1:5000/get-courses-with-id-matching-session/${user_id}`,{
                 method:"GET",
                 headers:{
-                    "token":sessionStorage.getItem("token"),
                     "Content-Type":"application/json"
                 }
             })
-            return res.json()
+            const data=await res.json()
+            if(!data["ERROR"]){
+                const courses=data['data']
+                console.log(courses)
+                const courses_dropdown=document.getElementById('courses-dropdown')
+                courses_dropdown.innerHTML='<option value="" disabled selected>Choose Course</option>'
+                courses.map(course=>{
+                    const option=document.createElement('option')
+                    option.value=course.id
+                    option.innerText=course.name
+                    courses_dropdown.appendChild(option)
+                })
+            }
         }
         catch(error){
             console.log(error.message)
-            return {"ERROR":error.message}
         }
     }
 
-    const fetch_courses=async()=>{
+    const fetch_review_post=async (payload,id)=>{
         try{
-            const res=await fetch(`http://127.0.0.1:5000/get-courses`,{
-                method:"GET"
+
+            const res= await fetch(`http://127.0.0.1:5000/add-review/${id}`,{
+                method:"POST",
+                body:payload,
+                headers:{
+                    "token":sessionStorage.getItem("token")
+                }
             })
-            return res.json()
+            // console.log(await res.json())
+            const data= await res.json()
+            const msg=document.getElementById('message')
+            if(!data["ERROR"]){
+                msg.innerHTML=data.message
+                msg.classList='success'
+            }
+            else{
+                msg.innerHTML=data.ERROR
+                msg.classList='error'
+            }
         }
         catch(error){
-            console.log(error.message)
-            return {"ERROR":error.message}
+            msg.innerHTML=error.message
+            msg.classList='error'
         }
     }
 
-    const populate_courses= (data)=>{
-        if(!data["ERROR"]){
-            const courses=data['data']
-            courses.map(course => {
-                const box=document.createElement('div');
-                box.classList='box'
-                box.innerHTML=`
-                    <div class="tutor">
-                        <img src="${course['teacher_image']}" alt="">
-                        <div>
-                            <h3>${course['teacher_name']}</h3>
-                            <span>${course['upload_date']}</span>
-                        </div>
-                    </div>
-                    <img src="${course['image']}" class="thumb" alt="">
-                    <h3 class="title">${course['name']}</h3>
-                    <div class="button-group">
-                        <a href="playlist.html?id=${course['id']}" class="inline-btn">View playlist</a>
-                        <a href="showreview.html?id=${course.id}" class="inline-btn">View Ratings</a>
-                    </div>
-                `
-                course_container.appendChild(box)
-            })
-        }
-    }
+    const frm=document.getElementById("review-form")
+    frm.addEventListener('submit', async(event)=>{
+        event.preventDefault()
+        const review_form=event.target
+        const payload = new FormData(review_form)
+        // const params= new URLSearchParams(window.location.search)
+        await fetch_review_post(payload,params.get("id"))
+    })
 
-    const params=new URLSearchParams(window.location.search);
-
-    const course_container=document.getElementById("course-container");
-        const data=await fetch_courses();
-        populate_courses(data)
-    
-
+    await fetch_course_with_id(params.get('id'))
 })

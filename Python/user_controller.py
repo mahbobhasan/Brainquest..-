@@ -32,8 +32,8 @@ def login(data,cursor):
     except Exception as e:
         return make_response({"ERROR":f"{e}"},400)
 
-def get_students(cursor):
-    query="select id, image, name, role_id from Users where role_id=1"
+def get_students(cursor,role):
+    query=f"select id, image, name, role_id from Users where role_id={role}"
 
     try:
         cursor.execute(query)
@@ -105,7 +105,7 @@ def delete_user(connector,id):
 
 
 def get_user_details(cursor,id):
-    query=f"select id, image, name, email, username, session, role_id from Users where id={id}"
+    query=f"select id, image, name, email,  session, role_id from Users where id={id}"
     try:
         cursor.execute(query)
         student=cursor.fetchone()

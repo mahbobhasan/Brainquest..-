@@ -227,7 +227,10 @@ document.addEventListener("DOMContentLoaded",async (event)=>{
                     </div>
                     <img src="${course['image']}" class="thumb" alt="">
                     <h3 class="title">${course['name']}</h3>
-                    <a href="playlist.html?id=${course['id']}" class="inline-btn">View playlist</a>
+                    <div class="button-group">
+                        <a href="playlist.html?id=${course['id']}" class="inline-btn">View playlist</a>
+                        <a href="showreview.html?id=${course.id}" class="inline-btn">View Ratings</a>
+                    </div>
                 `
                 course_container.appendChild(box)
             })

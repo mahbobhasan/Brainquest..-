@@ -1,5 +1,4 @@
-
-document.addEventListener("DOMContentLoaded",async (event)=>{
+document.addEventListener("DOMContentLoaded", async (event)=>{
     const fetch_api= async (id)=>{
         try{
             const res=await fetch(`http://127.0.0.1:5000/user/${id}`,{
@@ -179,69 +178,43 @@ document.addEventListener("DOMContentLoaded",async (event)=>{
         } else {
             disableDarkMode();
         }
-    }; 
-    console.log("hello")
-    const fetch_courses_with_id=async (id)=>{
-        try{
-            const res=await fetch(`http://127.0.0.1:5000/get-courses/${id}`,{
-                method:"GET",
-                headers:{
-                    "token":sessionStorage.getItem("token"),
-                    "Content-Type":"application/json"
-                }
-            })
-            return res.json()
-        }
-        catch(error){
-            console.log(error.message)
-            return {"ERROR":error.message}
-        }
-    }
+    };
 
-    const fetch_courses=async()=>{
-        try{
-            const res=await fetch(`http://127.0.0.1:5000/get-courses`,{
-                method:"GET"
-            })
-            return res.json()
-        }
-        catch(error){
-            console.log(error.message)
-            return {"ERROR":error.message}
-        }
-    }
+    const params=new URLSearchParams(window.location.search)
 
-    const populate_courses= (data)=>{
-        if(!data["ERROR"]){
-            const courses=data['data']
-            courses.map(course => {
-                const box=document.createElement('div');
-                box.classList='box'
-                box.innerHTML=`
-                    <div class="tutor">
-                        <img src="${course['teacher_image']}" alt="">
-                        <div>
-                            <h3>${course['teacher_name']}</h3>
-                            <span>${course['upload_date']}</span>
+    const fetch_reviews=async (course_id) =>{
+        try{
+            const res= await fetch(`http://127.0.0.1:5000/get-review/${course_id}`)
+            const data= await res.json()
+            console.log(data)
+            if(!data.ERROR){
+                const review_container=document.getElementById('review-container')
+                review_container.innerHTML=""
+                const reviews=await data.data
+                console.log(reviews)
+                reviews.map(review=>{
+                    const review_box=document.createElement('div')
+                    review_box.classList='review-box'
+                    review_box.innerHTML=`
+                        <div class="review-header">
+                            <img src="${review.image}" alt="Student Picture" class="student-img">
+                            <div class="review-info">
+                                <h3>${review.name}</h3>
+                                <p>Rating: <span class="rating">${review.rating}/5</span></p>
+                            </div>
                         </div>
-                    </div>
-                    <img src="${course['image']}" class="thumb" alt="">
-                    <h3 class="title">${course['name']}</h3>
-                    <div class="button-group">
-                        <a href="playlist.html?id=${course['id']}" class="inline-btn">View playlist</a>
-                        <a href="showreview.html?id=${course.id}" class="inline-btn">View Ratings</a>
-                    </div>
-                `
-                course_container.appendChild(box)
-            })
+                        <hr>
+                        <p class="review-text">${review.description}</p>
+                    `
+                    review_container.appendChild(review_box)
+
+                })
+                
+            }
+        }
+        catch(error){
+            console.log(error.message)
         }
     }
-
-    const params=new URLSearchParams(window.location.search);
-
-    const course_container=document.getElementById("course-container");
-        const data=await fetch_courses();
-        populate_courses(data)
-    
-
+    await fetch_reviews(params.get("id"))
 })

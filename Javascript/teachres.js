@@ -1,5 +1,4 @@
-
-document.addEventListener("DOMContentLoaded",async (event)=>{
+document.addEventListener("DOMContentLoaded",async(event)=>{
     const fetch_api= async (id)=>{
         try{
             const res=await fetch(`http://127.0.0.1:5000/user/${id}`,{
@@ -179,69 +178,59 @@ document.addEventListener("DOMContentLoaded",async (event)=>{
         } else {
             disableDarkMode();
         }
-    }; 
-    console.log("hello")
-    const fetch_courses_with_id=async (id)=>{
-        try{
-            const res=await fetch(`http://127.0.0.1:5000/get-courses/${id}`,{
-                method:"GET",
-                headers:{
-                    "token":sessionStorage.getItem("token"),
-                    "Content-Type":"application/json"
-                }
-            })
-            return res.json()
-        }
-        catch(error){
-            console.log(error.message)
-            return {"ERROR":error.message}
-        }
-    }
-
-    const fetch_courses=async()=>{
-        try{
-            const res=await fetch(`http://127.0.0.1:5000/get-courses`,{
-                method:"GET"
-            })
-            return res.json()
-        }
-        catch(error){
-            console.log(error.message)
-            return {"ERROR":error.message}
-        }
-    }
-
-    const populate_courses= (data)=>{
-        if(!data["ERROR"]){
-            const courses=data['data']
-            courses.map(course => {
-                const box=document.createElement('div');
-                box.classList='box'
-                box.innerHTML=`
-                    <div class="tutor">
-                        <img src="${course['teacher_image']}" alt="">
-                        <div>
-                            <h3>${course['teacher_name']}</h3>
-                            <span>${course['upload_date']}</span>
-                        </div>
-                    </div>
-                    <img src="${course['image']}" class="thumb" alt="">
-                    <h3 class="title">${course['name']}</h3>
-                    <div class="button-group">
-                        <a href="playlist.html?id=${course['id']}" class="inline-btn">View playlist</a>
-                        <a href="showreview.html?id=${course.id}" class="inline-btn">View Ratings</a>
-                    </div>
-                `
-                course_container.appendChild(box)
-            })
-        }
-    }
-
-    const params=new URLSearchParams(window.location.search);
-
-    const course_container=document.getElementById("course-container");
-        const data=await fetch_courses();
-        populate_courses(data)
-    
-
+    };
 })
+
+console.log("hello")
+let api_data="";
+
+
+async function fetch_api_data(){
+    try {
+        const response=await fetch("http://127.0.0.1:5000/teachers",{
+            method:"GET",
+            headers:{
+                "token":sessionStorage.getItem("token"),
+                "Content-Type":"applicaton/json"
+            }
+        })
+        api_data= await response.json()
+        api_data=api_data['data']
+        show_users(api_data)
+        console.log(api_data)
+    } catch (error) {
+        console.log(error)
+    }
+}
+fetch_api_data()
+
+
+function show_users(data){
+    const box_container=document.getElementById('teachers-container')
+    box_container.classList='box-container'
+    box_container.innerHTML=``
+    for(user of data){
+        const div=document.createElement('div')
+        div.classList.add("box")
+        console.log(user.name)
+        div.innerHTML=`
+            <div class="tutor">
+                <img src="${user.image}" alt="">
+                <div>
+                    <h3>${user.name}</h3>
+                </div>
+            </div>
+            <a href="tutors_profile.html?id=${user.id}" class="inline-btn" >View Profile</a>
+        
+        `
+        box_container.appendChild(div)
+    }
+    // const view_profile_btns=document.querySelectorAll(".inline-btn")
+    // view_profile_btns.forEach(button=>{
+    //     button.addEventListener('click',function(event){
+    //         localStorage.setItem('pk',button.id)
+    //     })
+    // })
+    
+    
+}

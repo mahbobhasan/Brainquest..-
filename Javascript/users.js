@@ -221,7 +221,6 @@ function show_users(data){
                 </div>
             </div>
             <a href="tutors_profile.html?id=${user.id}" class="inline-btn" >View Profile</a>
-        
         `
         box_container.appendChild(div)
     }

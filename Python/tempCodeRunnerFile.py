@@ -1,1 +1,1 @@
-/user/<int:id>
+a_course

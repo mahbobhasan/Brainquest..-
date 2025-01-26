@@ -216,7 +216,6 @@ const show_details=(data)=>{
             <div class="flex">
                 <p>Total Playlist :   <span>4</span></p>
                 <p>Total Videos :   <span>11</span></p>
-                <p>Total Likes : <span>998</span></p>
                 <p>Total Comments : <span>52</span></p>
             </div>
     `

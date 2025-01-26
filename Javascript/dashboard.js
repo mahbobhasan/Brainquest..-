@@ -240,6 +240,15 @@ document.addEventListener("DOMContentLoaded",async () => {
         else{
             btn.textContent="My Courses"
         }
+        if(data.role_id==="student"){
+            const review_btn=document.createElement('button')
+            review_btn.classList='inline-btn'
+            review_btn.innerHTML='Review a Course'
+            div.appendChild(review_btn)
+            review_btn.addEventListener('click',(event)=>{
+                window.location.href=`../review.html?id=${data.id}`
+            })
+        }
         div.appendChild(btn)
         btn.addEventListener("click",()=>{
             window.location.href=`../courses.html?id=${id}`
