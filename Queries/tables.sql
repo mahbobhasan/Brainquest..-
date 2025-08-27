@@ -1,5 +1,10 @@
 use department;
 
+create table role(
+    id int primary key,
+    role_name varchar(10)
+);
+
 create table users(
 	id int auto_increment primary key,
     name varchar(50) not null,
@@ -74,14 +79,14 @@ create table reviews(
 
 -- select * from courses;
 -- select * from users;
-select * from videos;
+-- select * from videos;
 -- select * from role;
 
-select c.name as name, c.image as image, c.description as description , c.upload_date as upload_date, t.name as teacher, t.image as teacher_image, (select count(*) from videos where course_id='CSTE1101') as course_number 
-from courses c join users t on c.teacher_id=t.id where c.id='cste1101';
+-- select c.name as name, c.image as image, c.description as description , c.upload_date as upload_date, t.name as teacher, t.image as teacher_image, (select count(*) from videos where course_id='CSTE1101') as course_number 
+-- from courses c join users t on c.teacher_id=t.id where c.id='cste1101';
 
-select v.title as title, v.url as url, v.description as description, v.upload_date as upload_date, t.name as teacher, t.image as teacher_image 
-from videos v join courses c on v.course_id=c.id join users t on c.teacher_id=t.id where v.id=2;
+-- select v.title as title, v.url as url, v.description as description, v.upload_date as upload_date, t.name as teacher, t.image as teacher_image 
+-- from videos v join courses c on v.course_id=c.id join users t on c.teacher_id=t.id where v.id=2;
 
-select c.description as description ,c.upload_date as upload_date, c.user_id as user_id, u.image as user_image
-from comment c join users u on c.user_id=u.id where c.video_id=5;
+-- select c.description as description ,c.upload_date as upload_date, c.user_id as user_id, u.image as user_image
+-- from comment c join users u on c.user_id=u.id where c.video_id=5;

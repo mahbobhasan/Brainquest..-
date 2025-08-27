@@ -1,4 +1,4 @@
-from flask import Flask,json,request,jsonify,make_response,send_file
+from flask import Flask,request,make_response,send_file
 from flask_cors import CORS
 from datetime import datetime
 app= Flask(__name__)
