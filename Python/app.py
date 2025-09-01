@@ -320,5 +320,30 @@ def get_reviews(course_id):
             return make_response({"ERROR":"No reviews"},200)
     except Exception as e:
         return make_response({"ERROR":e},500)
+
+
+from payment import initiate_payment
+@app.route('/initiate-payment',methods=["POST"])
+def payment():
+    return initiate_payment(request=request)
+
+    
+
+@app.route('/api/payment-success', methods=['POST'])
+def payment_success():
+    # Payment is successful — save details to DB
+    data = request.form
+    print("Payment Success:", data)
+    return make_response("http://localhost:3000/success")  # Your success page
+
+@app.route('/api/payment-fail', methods=['POST'])
+def payment_fail():
+    print("Payment Failed")
+    return make_response("http://localhost:3000/fail")
+
+@app.route('/api/payment-cancel', methods=['POST'])
+def payment_cancel():
+    print("Payment Canceled")
+    return make_response("http://localhost:3000/cancel")
 if __name__=="__main__":
     app.run();
