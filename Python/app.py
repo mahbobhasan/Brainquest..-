@@ -325,7 +325,7 @@ def get_reviews(course_id):
 from payment import initiate_payment
 @app.route('/initiate-payment',methods=["POST"])
 def payment():
-    return initiate_payment(request=request)
+    return initiate_payment(request=request,connector=connector)
 
     
 
