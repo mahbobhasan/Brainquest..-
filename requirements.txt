@@ -9,7 +9,7 @@ idna==3.10
 itsdangerous==2.2.0
 Jinja2==3.1.6
 MarkupSafe==3.0.2
-mysql-connector-python==9.4.0
+mysql-connector-python==8.3.0
 PyJWT==2.10.1
 requests==2.32.5
 sslcommerz-lib==1.0

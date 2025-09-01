@@ -1,4 +1,4 @@
-from flask import Flask,request,make_response,send_file
+from flask import Flask,request,make_response,send_file,redirect
 from flask_cors import CORS
 from datetime import datetime
 app= Flask(__name__)
@@ -328,7 +328,7 @@ def get_reviews(course_id):
 
 
 from payment import initiate_payment
-from payment_controller import update_transaction,get_status,get_price_of_course as course_amount
+from payment_controller import update_transaction,get_status,get_price_of_course as course_amount, delete_transaction
 @app.route('/initiate-payment',methods=["POST"])
 @Authenticate()
 def payment():
@@ -345,16 +345,21 @@ def get_stat(course_id,student_id):
 def payment_success():
     data = request.form
     print("Payment Success:", data)
-    return update_transaction(connector=connector,status="success",id=data['tran_id'])
+    update_transaction(connector=connector,status="success",id=data['tran_id'])
+    return redirect("http://127.0.0.1:5500/PaymentSuccess.html")
 
 @app.route('/api/payment-fail', methods=['POST'])
 def payment_fail():
     print("Payment Failed")
-    return make_response("http://localhost:3000/fail")
+    data = request.form
+    delete_transaction(connector=connector,id=data['tran_id'])
+    return redirect("http://127.0.0.1:5500/PaymentFailed.html")
 
 @app.route('/api/payment-cancel', methods=['POST'])
 def payment_cancel():
+    data = request.form
     print("Payment Canceled")
-    return make_response("http://localhost:3000/cancel")
+    delete_transaction(connector=connector,id=data['tran_id'])
+    return make_response("http://127.0.0.1:5500/PaymentCancelled.html")
 if __name__=="__main__":
     app.run();

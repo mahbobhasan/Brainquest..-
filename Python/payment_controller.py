@@ -22,6 +22,16 @@ def update_transaction(connector,status,id):
     except Exception as e:
         print(e)
         return make_response({'ERROR':f'{e}'},400)
+def delete_transaction(connector,id):
+    query=f"DELETE from transaction WHERE id='{id}'"
+    cursor=connector.cursor
+    try:
+        cursor.execute(query)
+        connector.connection.commit()
+        return make_response({"message":"Deleted successfully"},200)
+    except Exception as e:
+        print(e)
+        return make_response({"ERROR":e},400)
 
 def get_status(cursor,user_id,course_id):
     query=f"SELECT status from transaction where student_id={user_id} and course_id={course_id}"

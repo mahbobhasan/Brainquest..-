@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="description" content="Educational Website">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="keywords" content="HTML, CSS, JavaScript, MySQL">
+    <meta name="author" content="Fayaz Ali Muktadir And Mahbob Hasan Sajib">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Payment Failed</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
+    <link rel="stylesheet" href="CSS/style.css">
+    <style>
+        /* Payment Failed Page Styling */
+        .payment-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+            height: 70vh;
+            text-align: center;
+            background-color: #fdfdfd;
+            border-radius: 15px;
+            margin: 40px auto;
+            max-width: 700px;
+            padding: 40px;
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+            animation: fadeIn 1s ease-in-out;
+        }
+
+        .payment-container i {
+            font-size: 90px;
+            color: #e63946;
+            animation: bounce 1s infinite;
+            margin-bottom: 15px;
+        }
+
+        .payment-container h1 {
+            font-size: 34px;
+            color: #e63946;
+            margin-bottom: 12px;
+            font-weight: bold;
+        }
+
+        .payment-container p {
+            font-size: 18px;
+            color: #555;
+            max-width: 500px;
+            margin: 0 auto 25px;
+        }
+
+        .payment-container button {
+            padding: 12px 28px;
+            font-size: 16px;
+            background-color: #e63946;
+            color: #fff;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s ease-in-out;
+            box-shadow: 0 4px 12px rgba(230, 57, 70, 0.4);
+        }
+
+        .payment-container button:hover {
+            background-color: #c5303d;
+            transform: scale(1.07);
+        }
+
+        /* Bounce Animation for Icon */
+        @keyframes bounce {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
+        }
+
+        /* Fade-in animation */
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+    </style>
+</head>
+<body>
+    <header class="header" id="header"></header>
+
+    <!-- Sidebar -->
+    <div class="sidebar" id="sidebar"></div>
+
+    <!-- Payment Failed Section -->
+    <section class="playlist" id="playlist-container">
+        <h1 class="heading">Payment Status</h1>
+        <hr style="height:2px; border-width:0; color:gray; background-color:gray">
+        <div class="payment-container">
+            <i class="fa-solid fa-circle-xmark"></i>
+            <h1>Payment Failed!</h1>
+            <p>Unfortunately, your payment could not be processed. Please try again or use a different payment method.</p>
+            <button onclick="window.location.href='Index.html'">Home</button>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        &copy; copyright@2024 by <span>Fayaz Ali Muktadir and Mahbob Hasan Sajib</span> <br> | All Rights Reserved!
+    </footer>
+
+    <script src="Javascript/failed.js"></script>
+</body>
+</html>
