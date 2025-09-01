@@ -219,8 +219,13 @@ def get_courses(user_id):
 @app.route("/course/<string:id>")
 @Authenticate()
 def get_course_details(id):
-    if Authorization.admin_authority(request=request) or Authorization.teacher_authority(request=request) or Authorization.student_authority(request=request):
+    enrolled_authority=Authorization.enrolled_course_authority(request,id,connector.cursor)
+    if Authorization.admin_authority(request=request) or Authorization.teacher_authority(request=request) or (enrolled_authority and Authorization.student_authority(request=request)):
         return course_details(cursor=connector.cursor,id=id)
+    elif Authorization.student_authority(request=request):
+        return make_response({"ERROR":"You are not Authorized"},401)
+    else:
+        return make_response({""})
 
 from videos_controller import add_video as a_video, delete_video as d_video, update_video as u_video, video_details as v_details
 @app.route("/add-video",methods=["POST"])
@@ -323,18 +328,19 @@ def get_reviews(course_id):
 
 
 from payment import initiate_payment
+from payment_controller import update_transaction,get_status
 @app.route('/initiate-payment',methods=["POST"])
 def payment():
     return initiate_payment(request=request,connector=connector)
-
-    
+@app.route('/get-status/<string:course_id>/<int:student_id>',methods=['GET'])
+def get_stat(course_id,student_id):
+    return get_status(cursor=connector.cursor,user_id=student_id,course_id=course_id)
 
 @app.route('/api/payment-success', methods=['POST'])
 def payment_success():
-    # Payment is successful — save details to DB
     data = request.form
     print("Payment Success:", data)
-    return make_response("http://localhost:3000/success")  # Your success page
+    return update_transaction(connector=connector,status="success",id=data['tran_id'])
 
 @app.route('/api/payment-fail', methods=['POST'])
 def payment_fail():

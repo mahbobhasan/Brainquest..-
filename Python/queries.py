@@ -34,7 +34,7 @@ def delete_query(table,id):
 def course_details_query(id):
     query=f"select c.name as name, c.image as image, c.description as description, c.upload_date as upload_date, t.name as teacher, t.image as teacher_image, (select count(*) from videos where course_id='{id}') as course_number from courses c join users t on c.teacher_id=t.id where c.id='{id}'"
     query2=f"select id, title, thumbnail from videos where course_id='{id}'"
-    print(query)
+    # print(query)
     return {"q1":query,"q2":query2}
 
 

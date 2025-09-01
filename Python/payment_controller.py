@@ -10,4 +10,25 @@ def add_new_transaction(connector,data):
         return True
     except Exception as e:
         print(e)
-        return make_response({'ERROR':f'{e}'},400) 
+        return make_response({'ERROR':f'{e}'},400)
+ 
+def update_transaction(connector,status,id):
+    cursor=connector.cursor
+    query=f"UPDATE transaction SET status='{status}' where id='{id}'"
+    try:
+        cursor.execute(query)
+        connector.connection.commit()
+        return make_response({"message":status},200)
+    except Exception as e:
+        print(e)
+        return make_response({'ERROR':f'{e}'},400)
+
+def get_status(cursor,user_id,course_id):
+    query=f"SELECT status from transaction where student_id={user_id} and course_id={course_id}"
+    try:
+        cursor.execute(query)
+        status=cursor.fetchone()
+        return make_response({"status":status},200)
+    except Exception as e:
+        print(e)
+        return make_response({'ERROR':f'{e}'},400)
