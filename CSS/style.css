@@ -1494,7 +1494,29 @@ hr {
     padding: 10px;
     border-radius: 10px;
 }
-
+.warning{
+    background-color: rgba(241, 243, 101, 0.705);
+    font-size: x-large;
+    text-align: center;
+    width: 70%;
+    transition: 1s linear;
+    margin: auto;
+    padding: 10px;
+    border-radius: 10px;
+}
+.warning-message{
+    color: rgb(144, 146, 1);
+}
+.warning > .inline-btn{
+    background-color: #0486f1;
+    color:white
+}
+.warning > .inline-btn:hover{
+    background-color: #025da8;
+}
+.warning > .inline-btn:active{
+    scale: 0.98;
+}
 /* responsive portion */
 /* @media screen and (max-width:420px){  
     .header{

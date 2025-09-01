@@ -1,4 +1,4 @@
-document.addEventListener("DOMContentLoaded",async (event)=>{
+document.addEventListener("DOMContentLoaded", async(event)=>{
     const fetch_api= async (id)=>{
         try{
             const res=await fetch(`http://127.0.0.1:5000/user/${id}`,{
@@ -57,7 +57,7 @@ document.addEventListener("DOMContentLoaded",async (event)=>{
             const div2=document.getElementById('sidebar-profile')
             const navbar=document.getElementById('navbar')
             const data= await fetch_api(localStorage.getItem("id"))
-            console.log( data)
+            console.log( await data)
             if(!data["ERROR"]){
                 div.innerHTML=`
                     <img src="${data['data']['image']}" alt="" id="header-profile-img">
@@ -173,93 +173,50 @@ document.addEventListener("DOMContentLoaded",async (event)=>{
             disableDarkMode();
         }
     };
-    let params = new URLSearchParams(window.location.search);
-    let id = params.get('id');
-    // console.log(searchTerm)
-    const fetch_course= async (id) =>{
-        try{
-            const res=await fetch(`http://127.0.0.1:5000/course/${id}`,{
-                method:"GET",
-                headers:{
-                    "token":sessionStorage.getItem("token"),
-                    "Content-Type":"application/json"
-                }
-            })
-            return res.json()
-        }
-        catch(error){
-            return {"ERROR":error.message}
-        }
-    }
+    const params= new URLSearchParams(window.location.search)
 
-    const data= await fetch_course(id)
-    console.log(data)
-    const video_container = document.getElementById('video-container');
-    if (data["ERROR"]) {
-        video_container.innerHTML = '';
-        const playlist_container = document.getElementById('playlist-container')
-        playlist_container.innerHTML =
-            `
-                <div class="error">
-                    <p class="error-message">${data["ERROR"]}</p>
-                </div>
-            `
-    }
-    else if (await data["Warning"]) {
-        video_container.innerHTML = '';
-        const playlist_container = document.getElementById('playlist-container')
-        playlist_container.innerHTML =
-            `
-                <div class="warning">
-                    <p class="warning-message">${data['Warning']}</p>
-                    <a class="inline-btn" href="../Enroll.html?course_id=${id}">Enroll Now</a>
-                </div>
-            `
-    }
-    else{
-        const course_desc=document.getElementById('course-description')
-        const course=await data['data']['course']
-        course_desc.classList='row'
-        course_desc.innerHTML=`
-            <div class="columns">
-                <div class="thumb">
-                    <span>${course['course_number']} Videos</span>
-                    <img src="${course['image']}" alt="" >
-                </div>
-            </div>
-            <div class="col">
-                <div class="tutor">
-                    <img src="${course['teacher_image']}" alt="">    
-                    <div>
-                        <h3>${course['teacher']}</h3>
-                        <span>Physics Co-ordinator</span>
-                    </div>
+    const course_id = params.get("course_id")
+    console.log(course_id)
+    const course_id_field = document.getElementById('course-id')
+    console.log(course_id_field)
+    course_id_field.value = `${course_id}`
+    const checkoutForm = document.getElementById("checkout-form");
+    const phoneInput = document.getElementById("phone");
+    const message = document.getElementById("message");
+    
 
-                </div>
-                <div class="details">
-                    <h3>${course['name']}</h3>
-                    <p>${course['description']}</p>
-                    <div class="date">
-                        <i class="fas fa-calendar"></i>
-                        <span>${course['upload_date']}</span>
-                    </div>
-                </div>
-            </div>
-        `
-        const videos=await data['data']['videos']
-        console.log(videos)
-        const video_container=document.getElementById("video-container")
-        videos.map(video => {
-            const vid=document.createElement('a')
-            vid.href=`watch-video.html?id=${video.id}`
-            vid.classList='box'
-            vid.innerHTML=`
-                <i class="fas fa-play"></i>
-                <img src="${video['thumbnail']}" alt="">
-                <h3>${video['title']}</h3>
-            `
-            video_container.appendChild(vid)
+    const fetch_amount = async function (course_id) {
+        const res = await fetch(`http://127.0.0.1:5000/get_course_amount/${course_id}`, {
+            method: "GET",
+            headers: {
+                token: sessionStorage.getItem("token")
+            }
         })
+        const data = await res.json()
+        
     }
-})
+checkoutForm.addEventListener("submit", function (e) {
+    e.preventDefault();
+    console.log('submit')
+    const phoneRegex = /^(?:\+8801|01)[3-9]\d{8}$/;
+    const phone = phoneInput.value.trim();
 
+    if (!phoneRegex.test(phone)) {
+        message.style.color = "red";
+        message.textContent = "❌ Please enter a valid Bangladeshi phone number!";
+        return;
+    }
+
+    message.style.color = "green";
+    message.textContent = "✅ Phone number is valid. Redirecting to payment...";
+
+    // Send data to backend
+    const formData = {
+        course_id: document.getElementById("course_id").value,
+        course_amount: document.getElementById("course_amount").value,
+        phone: phone
+    };
+    })
+
+
+})

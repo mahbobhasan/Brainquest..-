@@ -59,7 +59,7 @@ def get_user_details(id):
 
 @app.route("/uploads/<filename>")
 def get_file(filename):
-    return send_file(f"..//uploads//{filename}")
+    return send_file(f"uploads//{filename}")
     
 
 @app.route("/add-user", methods=["POST"])
@@ -222,10 +222,10 @@ def get_course_details(id):
     enrolled_authority=Authorization.enrolled_course_authority(request,id,connector.cursor)
     if Authorization.admin_authority(request=request) or Authorization.teacher_authority(request=request) or (enrolled_authority and Authorization.student_authority(request=request)):
         return course_details(cursor=connector.cursor,id=id)
-    elif Authorization.student_authority(request=request):
+    elif Authorization.student_authority(request=request)==False:
         return make_response({"ERROR":"You are not Authorized"},401)
     else:
-        return make_response({""})
+        return make_response({"Warning":"You have to Enroll this course.!"},200)
 
 from videos_controller import add_video as a_video, delete_video as d_video, update_video as u_video, video_details as v_details
 @app.route("/add-video",methods=["POST"])

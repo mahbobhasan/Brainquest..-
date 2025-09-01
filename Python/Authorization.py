@@ -44,7 +44,8 @@ def enrolled_course_authority(request,course_id,cursor):
     try:
         cursor.execute(query)
         stat=cursor.fetchone()
-        if stat=="success":
+        print(stat)
+        if stat is not None and stat['status']=="success":
             return True
         else:
             False
