@@ -75,7 +75,9 @@ create table reviews(
     foreign key (course) references courses(id)
     on update cascade
     on delete cascade
-    );
+);
+CREATE TABLE `department`.`transaction` (`trans_id` VARCHAR(50) NOT NULL , `student_id` INT NOT NULL , `course_id` INT NOT NULL , `status` ENUM('pending','cancelled','failed','success') NOT NULL , `amount` DECIMAL NOT NULL , `date` DATE NOT NULL DEFAULT CURRENT_TIMESTAMP , PRIMARY KEY (`trans_id`)) ENGINE = InnoDB;
+
 
 -- select * from courses;
 -- select * from users;
