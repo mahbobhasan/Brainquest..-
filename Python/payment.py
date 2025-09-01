@@ -1,10 +1,12 @@
 from sslcommerz_lib import SSLCOMMERZ 
 from flask import Flask, request, jsonify, redirect
 from sslcommerz_lib import SSLCOMMERZ
-from payment_controller import add_new_transaction
+from payment_controller import add_new_transaction,get_price_of_course as course_price
 from user_controller import get_user_details
 from course_controller import get_course_details
 from flask import make_response
+from Authorization import get_self_id
+from datetime import datetime
 import pprint
 # SSLCommerz credentials (sandbox for testing)
 STORE_ID = "sazib65887285e7dea"
@@ -15,19 +17,26 @@ IS_SANDBOX = True  # Set False for live
 def initiate_payment(request:request,connector):
 
     data = request.form
+    print(data)
     final_dict={}
     for key in data.keys():
         final_dict[key]=data[key]
     final_dict['status']='pending'
-    
+    pprint.pprint(final_dict)
 
-    student=get_user_details(cursor=connector.cursor,id=final_dict['student_id'])
+    student_id=get_self_id(request=request)
+    student=get_user_details(cursor=connector.cursor,id=student_id)
     course=get_course_details(cursor=connector.cursor,id=final_dict['course_id'])
     student=student.get_json()
     course=course.get_json()
     pprint.pprint(student)
     pprint.pprint(course['data']['course'])
     if("ERROR" not in student.keys()) and ("ERROR" not in course.keys()) and (course['data']['course'] is not None):
+        amount=course_price(cursor=connector.cursor,id=final_dict['course_id']).get_json()
+        final_dict['amount']=amount['price']
+        id=f"TnX_{str(datetime.now().timestamp()).replace(".","")}"
+        final_dict['id']=id
+        final_dict['student_id']=student['data']['id']
         res=add_new_transaction(data=final_dict,connector=connector)
         if res==True:
             student_name=student['data']['name']
@@ -44,16 +53,16 @@ def initiate_payment(request:request,connector):
 
             # Payment details
             post_body = {
-                'total_amount': data['amount'],
+                'total_amount': amount['price'],
                 'currency': "BDT",
-                'tran_id': data['id'],   # Unique transaction ID
+                'tran_id': id,   # Unique transaction ID
                 'success_url': "http://localhost:5000/api/payment-success",
                 'fail_url': "http://localhost:5000/api/payment-fail",
                 'cancel_url': "http://localhost:5000/api/payment-cancel",
                 'emi_option': 0,
                 'cus_name': student_name,
                 'cus_email': student_email,
-                'cus_phone': '01810497044',
+                'cus_phone': final_dict['phone'],
                 'cus_add1': '',
                 'cus_city': "Dhaka",
                 'cus_country': "Bangladesh",

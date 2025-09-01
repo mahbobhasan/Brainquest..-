@@ -328,11 +328,16 @@ def get_reviews(course_id):
 
 
 from payment import initiate_payment
-from payment_controller import update_transaction,get_status
+from payment_controller import update_transaction,get_status,get_price_of_course as course_amount
 @app.route('/initiate-payment',methods=["POST"])
+@Authenticate()
 def payment():
     return initiate_payment(request=request,connector=connector)
 @app.route('/get-status/<string:course_id>/<int:student_id>',methods=['GET'])
+@app.route("/get_course_amount/<string:course_id>",methods=["GET"])
+def get_course_amount(course_id):
+    return make_response(course_amount(cursor=connector.cursor,id=course_id))
+
 def get_stat(course_id,student_id):
     return get_status(cursor=connector.cursor,user_id=student_id,course_id=course_id)
 

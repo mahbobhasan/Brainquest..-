@@ -32,3 +32,17 @@ def get_status(cursor,user_id,course_id):
     except Exception as e:
         print(e)
         return make_response({'ERROR':f'{e}'},400)
+    
+    
+def get_price_of_course(cursor,id):
+    query=f"select price from courses where id='{id}'"
+    try:
+        cursor.execute(query)
+        amount=cursor.fetchone()
+        if amount is not None:
+            return make_response(amount,200)
+        else:
+            return make_response({"ERROR":"Something went wrong?"},200)
+    except Exception as e:
+        print(e)
+        return make_response({"ERROR":f"{e}"},400)

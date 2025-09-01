@@ -183,6 +183,7 @@ document.addEventListener("DOMContentLoaded", async(event)=>{
     const checkoutForm = document.getElementById("checkout-form");
     const phoneInput = document.getElementById("phone");
     const message = document.getElementById("message");
+    const amount = document.getElementById("course-amount");
     
 
     const fetch_amount = async function (course_id) {
@@ -193,9 +194,48 @@ document.addEventListener("DOMContentLoaded", async(event)=>{
             }
         })
         const data = await res.json()
+        if (data['price']) {
+            amount.value=`${data['price']} ৳`
+        }
+        else {
+            message.textContent = data['ERROR'];
+        }
+    }
+    await fetch_amount(course_id)
+
+    const fetch_payment = async function (course_id, phone) {
+        const formdata = new FormData();
+        formdata.append("course_id", course_id)
+        formdata.append("phone", phone)
+        try {
+            const res = await fetch(`http://127.0.0.1:5000/initiate-payment`, {
+                method: "POST",
+                body: formdata,
+                headers: {
+                    token: sessionStorage.getItem("token")
+                }
+
+            })
+            const data = await res.json();
+            if (data['ERROR']) {
+                message.style.color = "red";
+                message.textContent = data['ERROR'];
+            }
+
+            if (data.GatewayPageURL) {
+                // Redirect student to SSLCommerz payment page
+                window.location.href = data.GatewayPageURL;
+            } else {
+                alert("Payment session creation failed!");
+            }
+        }
+        catch (error) {
+        message.style.color = "red";
+        message.textContent = error.message;
+        }
         
     }
-checkoutForm.addEventListener("submit", function (e) {
+checkoutForm.addEventListener("submit",async function (e) {
     e.preventDefault();
     console.log('submit')
     const phoneRegex = /^(?:\+8801|01)[3-9]\d{8}$/;
@@ -208,14 +248,11 @@ checkoutForm.addEventListener("submit", function (e) {
     }
 
     message.style.color = "green";
-    message.textContent = "✅ Phone number is valid. Redirecting to payment...";
-
+    message.textContent = "Redirecting to payment...";
+    await fetch_payment(course_id,phone)
     // Send data to backend
-    const formData = {
-        course_id: document.getElementById("course_id").value,
-        course_amount: document.getElementById("course_amount").value,
-        phone: phone
-    };
+    
+
     })
 
 

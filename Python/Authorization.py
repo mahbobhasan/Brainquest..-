@@ -1,8 +1,17 @@
 import jwt
 from pprint import pprint
+from flask import make_response
 def decrypt(token):
-    data=jwt.decode(jwt=token,key="bhung",algorithms="HS384")
-    return data["payload"]
+    try:
+        data=jwt.decode(jwt=token,key="bhung",algorithms="HS384")
+        # print(jwt.decode(jwt=authorization,key="bhung",algorithms="HS384"))
+        return data['payload']
+    except jwt.ExpiredSignatureError:
+        return make_response({"ERROR":"Token Expired!"},401)
+    except jwt.InvalidTokenError as e:
+        return make_response({"ERROR":"Invalid Token!"},401)
+    except Exception as e:
+        return make_response({"ERROR":f"{e}"},401)
 def get_students_authority(request):
     data=decrypt(request.headers.get("token"))
     if data['role_id']==3 or data['role_id']==2 or data['role_id']==1:
@@ -52,3 +61,10 @@ def enrolled_course_authority(request,course_id,cursor):
     except Exception as e:
         pprint({"ERROR":e})
         return False
+    
+def get_self_id(request):
+    data=decrypt(request.headers.get("token"))
+    """
+    eikhane aro validation lagbe
+    """
+    return data['id']
